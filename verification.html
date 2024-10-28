@@ -1,235 +1,311 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Verification Page</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+	<head>
+		<meta charset="UTF-8" />
+		<meta
+			name="viewport"
+			content="width=device-width, initial-scale=1.0" />
+		<title>Verification Page</title>
+		<style>
+			* {
+				margin: 0;
+				padding: 0;
+				box-sizing: border-box;
+			}
 
-        body {
-            background-color: #ffffff;
-            font-family: Arial, sans-serif;
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            color: black;
-        }
+			body {
+				background-color: #ffffff;
+				font-family: Arial, sans-serif;
+				height: 100vh;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				color: black;
+			}
 
-        .navbar {
-            position: fixed;
-               top: 0;
-               width: 100%;
-               height: 80px;
-               background: #D9D9D9; 
-               display: flex;
-               justify-content: space-between;
-               align-items: center;
-               padding: 0 20px;
-               z-index: 100;
-               box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1)
+			.navbar {
+				position: fixed;
+				top: 0;
+				width: 100%;
+				height: 80px;
+				background: #d9d9d9;
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+				padding: 0 20px;
+				z-index: 100;
+				box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+			}
 
-        }
+			.navbar .logo img {
+				height: 110px;
+				width: auto;
+			}
 
-        .navbar .logo img {
-            height: 110px; 
-            width: auto;
-        }
+			.container {
+				text-align: center;
+				margin-top: 100px;
+			}
 
-        .container {
-            text-align: center;
-            margin-top: 100px;
-        }
+			.verification-text {
+				font-size: 18px;
+				color: #333;
+				margin-bottom: 20px;
+			}
 
-        .verification-text {
-            font-size: 18px;
-            color: #333;
-            margin-bottom: 20px;
-        }
+			.example-number {
+				font-weight: bold;
+				color: #767184;
+			}
 
-        .example-number {
-            font-weight: bold;
-            color: #767184;
-        }
+			.input-container {
+				display: flex;
+				justify-content: center;
+				gap: 10px;
+				margin-bottom: 20px;
+			}
 
-        .input-container {
-            display: flex;
-            justify-content: center;
-            gap: 10px; 
-            margin-bottom: 20px;
-        }
+			.input-container input {
+				width: 50px;
+				height: 50px;
+				text-align: center;
+				font-size: 24px;
+				border: 1px solid #ccc;
+				border-radius: 8px;
+				outline: none;
+			}
 
-        .input-container input {
-            width: 50px;
-            height: 50px;
-            text-align: center;
-            font-size: 24px;
-            border: 1px solid #ccc;
-            border-radius: 8px;
-            outline: none;
-        }
+			.input-container input:focus {
+				border-color: #767184;
+			}
 
-        .input-container input:focus {
-            border-color: #767184;
-        }
+			.resend-button {
+				background: none;
+				border: none;
+				color: #767184;
+				font-size: 16px;
+				cursor: pointer;
+				margin-bottom: 10px;
+			}
 
-        .resend-button {
-            background: none;
-            border: none;
-            color: #767184;
-            font-size: 16px;
-            cursor: pointer;
-            margin-bottom: 10px;
-        }
+			.resend-button:hover {
+				text-decoration: underline;
+			}
 
-        .resend-button:hover {
-            text-decoration: underline;
-        }
+			.timer {
+				font-size: 16px;
+				color: #666;
+			}
 
-        .timer {
-            font-size: 16px;
-            color: #666;
-        }
+			.error-message {
+				color: red;
+				margin-top: 10px;
+			}
+		</style>
+	</head>
+	<body>
+		<nav class="navbar">
+			<div class="logo">
+				<a href="index.html"
+					><img
+						src="nearby_logo.png"
+						alt="NearbySpot Logo"
+				/></a>
+			</div>
+		</nav>
 
-        .error-message {
-            color: red;
-            margin-top: 10px;
-        }
-    </style>
-</head>
-<body>
-    <nav class="navbar">
-        <div class="logo">
-            <a href="index.html"><img src="nearby_logo.png" alt="NearbySpot Logo"></a>
-        </div>
-    </nav>
+		<div class="container">
+			<div class="verification-text">
+				Enter the 6-digit code sent to your email address
+				<span
+					id="phoneNumber"
+					class="example-number"></span>
+				<!-- by SMS -->
+			</div>
 
-    <div class="container">
-        <div class="verification-text">
-            Enter the 6-digit code sent to <span id="phoneNumber" class="example-number"></span> by SMS
-        </div>
+			<div class="input-container">
+				<input
+					type="text"
+					maxlength="1"
+					class="code-input" />
+				<input
+					type="text"
+					maxlength="1"
+					class="code-input" />
+				<input
+					type="text"
+					maxlength="1"
+					class="code-input" />
+				<input
+					type="text"
+					maxlength="1"
+					class="code-input" />
+				<input
+					type="text"
+					maxlength="1"
+					class="code-input" />
+				<input
+					type="text"
+					maxlength="1"
+					class="code-input" />
+			</div>
 
-        <div class="input-container">
-            <input type="text" maxlength="1" class="code-input">
-            <input type="text" maxlength="1" class="code-input">
-            <input type="text" maxlength="1" class="code-input">
-            <input type="text" maxlength="1" class="code-input">
-            <input type="text" maxlength="1" class="code-input">
-            <input type="text" maxlength="1" class="code-input">
-        </div>
+			<button
+				class="resend-button"
+				id="resendButton"
+				disabled>
+				Didn't receive it?
+			</button>
 
-        <button class="resend-button" id="resendButton" disabled>Didn't receive it?</button>
+			<div
+				class="timer"
+				id="timerText">
+				Get new code in 30 seconds
+			</div>
 
-        <div class="timer" id="timerText">Get new code in 30 seconds</div>
+			<div
+				id="errorMessage"
+				class="error-message"></div>
+		</div>
 
-        <div id="errorMessage" class="error-message"></div>
-    </div>
+		<script>
+			function getQueryParams() {
+				const queryString = window.location.search;
+				const urlParams = new URLSearchParams(queryString);
+				return {
+					phone: urlParams.get('phone'),
+				};
+			}
 
-    <script>
-        function getQueryParams() {
-            const queryString = window.location.search;
-            const urlParams = new URLSearchParams(queryString);
-            return {
-                phone: urlParams.get('phone')
-            };
-        }
+			const params = getQueryParams();
+			const phoneNumberElement = document.getElementById('phoneNumber');
 
-        const params = getQueryParams();
-        const phoneNumberElement = document.getElementById('phoneNumber');
-        
-        if (params.phone) {
-            phoneNumberElement.textContent = params.phone;
-        } else {
-            phoneNumberElement.textContent = 'No phone number provided';
-        }
+			if (params.phone) {
+				phoneNumberElement.textContent = params.phone;
+			} else {
+				phoneNumberElement.textContent = '';
+			}
 
-        const inputs = document.querySelectorAll('.code-input');
+			const inputs = Array.from(
+				document.getElementsByClassName('code-input'),
+			);
 
-        inputs.forEach((input, index) => {
-            input.addEventListener('input', () => {
-                input.value = input.value.replace(/\D/g, '');
+			inputs.forEach((input, index) => {
+				input.addEventListener('input', (e) => {
+					console.log(e.target.value);
+					input.value = input.value.replace(/\D/g, '');
 
-                if (input.value.length === 1 && index < inputs.length - 1) {
-                    inputs[index + 1].focus();
-                }
-            });
+					if (input.value.length === 1 && index < inputs.length - 1) {
+						inputs[index + 1].focus();
+					}
 
-            input.addEventListener('keydown', (e) => {
-                if (!['Backspace', 'ArrowLeft', 'ArrowRight', 'Tab'].includes(e.key) && !/^\d$/.test(e.key)) {
-                    e.preventDefault();
-                }
+					if (getCodeFromInputs().length === inputs.length) {
+						validateCode();
+					}
+				});
 
-                if (e.key === 'Backspace' && input.value === '' && index > 0) {
-                    inputs[index - 1].focus();
-                    inputs[index - 1].value = ''; 
-                }
-            });
-        });
+				input.addEventListener('keydown', (e) => {
+					console.log(e.key);
+					if (
+						![
+							'Backspace',
+							'ArrowLeft',
+							'ArrowRight',
+							'Tab',
+						].includes(e.key) &&
+						!/^\d$/.test(e.key)
+					) {
+						e.preventDefault();
+					}
 
-        function getCodeFromInputs() {
-            let code = '';
-            inputs.forEach(input => {
-                code += input.value;
-            });
-            return code;
-        }
+					if (
+						e.key === 'Backspace' &&
+						input.value === '' &&
+						index > 0
+					) {
+						inputs[index - 1].focus();
+						inputs[index - 1].value = '';
+					}
+				});
+			});
 
-        function validateCode() {
-            const enteredCode = getCodeFromInputs();
-            const correctCode = '123456'; 
+			function getCodeFromInputs() {
+				let code = '';
+				inputs.forEach((input) => {
+					code += input.value;
+				});
+				return code;
+			}
 
-            if (enteredCode === correctCode) {
-                window.location.href = 'getstarted.html';
-            } else {
-                document.getElementById('errorMessage').textContent = 'Invalid code. Please try again.';
-            }
-        }
+			function validateCode() {
+				const enteredCode = Number(getCodeFromInputs());
+				const email = localStorage.getItem('email');
+				fetch('http://127.0.0.1:5000/v1/auth/verify-otp', {
+					method: 'PATCH',
+					headers: {
+						'Content-Type': 'application/json',
+					},
+					body: JSON.stringify({
+						email: email,
+						otp: enteredCode,
+					}),
+				})
+					.then((response) => response.json())
+					.then((data) => {
+						if (data.code === 'success') {
+							alert('OTP verified successfully!');
+							window.location.href = 'getstarted.html';
+						} else {
+							document.getElementById(
+								'errorMessage',
+							).textContent = data.message;
+						}
+					})
+					.catch((error) => {
+						console.error('Error:', error);
+					});
+			}
 
-        let timer = 30;
-        const timerText = document.getElementById('timerText');
-        const resendButton = document.getElementById('resendButton');
+			let timer = 30;
+			const timerText = document.getElementById('timerText');
+			const resendButton = document.getElementById('resendButton');
 
-        const countdown = setInterval(() => {
-            if (timer > 0) {
-                timer--;
-                timerText.textContent = `Get new code in ${timer} seconds`;
-            } else {
-                clearInterval(countdown);
-                timerText.textContent = ''; 
-                resendButton.disabled = false; 
-            }
-        }, 1000);
+			const countdown = setInterval(() => {
+				if (timer > 0) {
+					timer--;
+					timerText.textContent = `Get new code in ${timer} seconds`;
+				} else {
+					clearInterval(countdown);
+					timerText.textContent = '';
+					resendButton.disabled = false;
+				}
+			}, 1000);
 
-        resendButton.addEventListener('click', () => {
-            alert("Resending new code...");
-            resendButton.disabled = true; 
+			resendButton.addEventListener('click', () => {
+				alert('Resending new code...');
+				resendButton.disabled = true;
 
-            timer = 30;
-            timerText.textContent = `Get new code in ${timer} seconds`;
-            const newCountdown = setInterval(() => {
-                if (timer > 0) {
-                    timer--;
-                    timerText.textContent = `Get new code in ${timer} seconds`;
-                } else {
-                    clearInterval(newCountdown);
-                    timerText.textContent = ''; 
-                    resendButton.disabled = false; 
-                }
-            }, 1000);
-        });
+				timer = 30;
+				timerText.textContent = `Get new code in ${timer} seconds`;
+				const newCountdown = setInterval(() => {
+					if (timer > 0) {
+						timer--;
+						timerText.textContent = `Get new code in ${timer} seconds`;
+					} else {
+						clearInterval(newCountdown);
+						timerText.textContent = '';
+						resendButton.disabled = false;
+					}
+				}, 1000);
+			});
 
-        inputs.forEach(input => {
-            input.addEventListener('input', () => {
-                if (getCodeFromInputs().length === 6) {
-                    validateCode(); 
-                }
-            });
-        });
-    </script>
-</body>
+			inputs.forEach((input) => {
+				input.addEventListener('input', () => {
+					if (getCodeFromInputs().length === 6) {
+						validateCode();
+					}
+				});
+			});
+		</script>
+	</body>
 </html>

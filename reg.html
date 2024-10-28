@@ -1,280 +1,355 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registration</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+	<head>
+		<meta charset="UTF-8" />
+		<meta
+			name="viewport"
+			content="width=device-width, initial-scale=1.0" />
+		<script
+			async
+			src="https://code.jquery.com/jquery-3.7.1.slim.min.js"
+			integrity="sha256-kmHvs0B+OpCW5GVHUNjv9rOmY0IvSIRcf7zGUDTDQM8="
+			crossorigin="anonymous"></script>
+		<title>Registration</title>
+		<style>
+			* {
+				margin: 0;
+				padding: 0;
+				box-sizing: border-box;
+			}
 
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-        }
+			body {
+				font-family: Arial, sans-serif;
+				background-color: #f4f4f4;
+				margin: 0;
+				padding: 0;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				height: 100vh;
+			}
 
-        .navbar {
-            position: fixed;
-               top: 0;
-               width: 100%;
-               height: 80px;
-               background: #D9D9D9; 
-               display: flex;
-               justify-content: space-between;
-               align-items: center;
-               padding: 0 20px;
-               z-index: 100;
-               box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1)
+			.navbar {
+				position: fixed;
+				top: 0;
+				width: 100%;
+				height: 80px;
+				background: #d9d9d9;
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+				padding: 0 20px;
+				z-index: 100;
+				box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+			}
 
-        }
+			.navbar.faded {
+				opacity: 0.5;
+			}
 
-        .navbar.faded {
-            opacity: 0.5;
-        }
+			.navbar .logo {
+				display: flex;
+				align-items: center;
+			}
 
-        .navbar .logo {
-            display: flex;
-            align-items: center;
-        }
+			.navbar .logo img {
+				height: 110px;
+				width: auto;
+			}
 
-        .navbar .logo img {
-            height: 110px; 
-            width: auto;
-        }
+			.registration-form {
+				background-color: white;
+				padding: 40px;
+				border-radius: 15px;
+				box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+				max-width: 500px;
+				width: 100%;
+				margin-top: 80px;
+			}
 
-        .registration-form {
-            background-color: white;
-            padding: 40px;
-            border-radius: 15px;
-            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
-            max-width: 500px;
-            width: 100%;
-            margin-top: 80px;
-        }
+			.registration-form h2 {
+				text-align: center;
+				margin-bottom: 15px;
+				font-size: 28px;
+				color: #333;
+			}
 
-        .registration-form h2 {
-            text-align: center;
-            margin-bottom: 15px;
-            font-size: 28px;
-            color: #333;
-        }
+			.registration-form p {
+				text-align: center;
+				font-size: 16px;
+				color: #666;
+				margin-bottom: 25px;
+			}
 
-        .registration-form p {
-            text-align: center;
-            font-size: 16px;
-            color: #666;
-            margin-bottom: 25px;
-        }
+			.registration-form .input-group {
+				display: flex;
+				align-items: center;
+				border: 1px solid #ccc;
+				border-radius: 8px;
+				overflow: hidden;
+				margin-bottom: 20px;
+			}
 
-        .registration-form .input-group {
-            display: flex;
-            align-items: center;
-            border: 1px solid #ccc;
-            border-radius: 8px;
-            overflow: hidden;
-            margin-bottom: 20px;
-        }
+			.registration-form .input-group select {
+				border: none;
+				padding: 15px;
+				background-color: #f4f4f4;
+				cursor: pointer;
+				font-size: 16px;
+			}
 
-        .registration-form .input-group select {
-            border: none;
-            padding: 15px;
-            background-color: #f4f4f4;
-            cursor: pointer;
-            font-size: 16px;
-        }
+			.registration-form .input-group img {
+				width: 32px;
+				height: 22px;
+				margin-right: 15px;
+			}
 
-        .registration-form .input-group img {
-            width: 32px;
-            height: 22px;
-            margin-right: 15px;
-        }
+			.registration-form input[type='tel'] {
+				width: 100%;
+				padding: 15px;
+				border: none;
+				border-left: 1px solid #ccc;
+				border-radius: 0;
+				outline: none;
+				color: #000;
+				font-size: 16px;
+				-moz-appearance: textfield;
+			}
 
-        .registration-form input[type="tel"] {
-            width: 100%;
-            padding: 15px;
-            border: none;
-            border-left: 1px solid #ccc;
-            border-radius: 0;
-            outline: none;
-            color: #000;
-            font-size: 16px;
-            -moz-appearance: textfield;
-        }
+			.registration-form input[type='tel']::-webkit-inner-spin-button,
+			.registration-form input[type='tel']::-webkit-outer-spin-button {
+				-webkit-appearance: none;
+				margin: 0;
+			}
 
-        .registration-form input[type="tel"]::-webkit-inner-spin-button,
-        .registration-form input[type="tel"]::-webkit-outer-spin-button {
-            -webkit-appearance: none;
-            margin: 0;
-        }
+			.registration-form button {
+				width: 100%;
+				padding: 15px;
+				border: none;
+				background-color: #767184;
+				color: white;
+				font-size: 18px;
+				border-radius: 8px;
+				cursor: pointer;
+				margin-top: 15px;
+			}
 
-        .registration-form button {
-            width: 100%;
-            padding: 15px;
-            border: none;
-            background-color: #767184;
-            color: white;
-            font-size: 18px;
-            border-radius: 8px;
-            cursor: pointer;
-            margin-top: 15px;
-        }
+			.registration-form button:disabled {
+				background-color: #d9d9d9;
+				cursor: not-allowed;
+			}
 
-        .registration-form button:disabled {
-            background-color: #d9d9d9;
-            cursor: not-allowed;
-        }
+			.registration-form button:hover:not(:disabled) {
+				background-color: #5c5a6c;
+			}
 
-        .registration-form button:hover:not(:disabled) {
-            background-color: #5c5a6c;
-        }
+			.registration-form .checkbox-container {
+				display: flex;
+				align-items: center;
+				margin-bottom: 25px;
+			}
 
-        .registration-form .checkbox-container {
-            display: flex;
-            align-items: center;
-            margin-bottom: 25px;
-        }
+			.registration-form input[type='checkbox'] {
+				margin-right: 15px;
+			}
 
-        .registration-form input[type="checkbox"] {
-            margin-right: 15px;
-        }
+			.registration-form input[type='checkbox']:hover {
+				cursor: pointer;
+			}
 
-        .registration-form input[type="checkbox"]:hover {
-            cursor: pointer;
-        }
+			.error-message {
+				color: red;
+				font-size: 16px;
+				text-align: center;
+				margin-bottom: 15px;
+			}
 
-        .error-message {
-            color: red;
-            font-size: 16px;
-            text-align: center;
-            margin-bottom: 15px;
-        }
+			.social-login {
+				text-align: center;
+				margin-top: 15px;
+			}
 
-        .social-login {
-            text-align: center;
-            margin-top: 15px;
-        }
+			.social-login button {
+				width: 100%;
+				padding: 15px;
+				margin-top: 15px;
+				background-color: #ffffff;
+				border: 1px solid #000000;
+				border-radius: 8px;
+				cursor: pointer;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				color: #000;
+				font-size: 18px;
+				text-align: center;
+			}
 
-        .social-login button {
-            width: 100%;
-            padding: 15px;
-            margin-top: 15px;
-            background-color: #ffffff;
-            border: 1px solid #000000;
-            border-radius: 8px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #000;
-            font-size: 18px;
-            text-align: center;
-        }
+			.social-login button:hover {
+				background-color: #767184;
+				color: #ffffff;
+			}
 
-        .social-login button:hover {
-            background-color: #767184;
-            color: #ffffff;
-        }
+			.or-divider {
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				margin: 25px 0;
+			}
 
-        .or-divider {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 25px 0;
-        }
+			.or-divider::before,
+			.or-divider::after {
+				content: '';
+				flex: 1;
+				border-bottom: 1px solid #ccc;
+				margin: 0 15px;
+			}
 
-        .or-divider::before, .or-divider::after {
-            content: '';
-            flex: 1;
-            border-bottom: 1px solid #ccc;
-            margin: 0 15px;
-        }
+			.or-divider span {
+				font-size: 16px;
+				color: #666;
+			}
+		</style>
+	</head>
+	<body>
+		<nav class="navbar">
+			<div class="logo">
+				<a href="index.html">
+					<img
+						src="nearby_logo.png"
+						alt="NearbySpot Logo" />
+				</a>
+			</div>
+		</nav>
 
-        .or-divider span {
-            font-size: 16px;
-            color: #666;
-        }
-    </style>
-</head>
-<body>
-
-    <nav class="navbar">
-        <div class="logo">
-            <a href="index.html">
-                <img src="nearby_logo.png" alt="NearbySpot Logo">
-            </a>
-        </div>
-    </nav>
-
-    <div class="registration-form">
-        <h2>Secured Login</h2>
-        <p>Enter your registered phone number</p>
-        <form id="registrationForm" action="verification.html" method="get">
-            <div class="input-group">
-                <select id="countryCode" name="countryCode">
+		<div class="registration-form">
+			<h2>Secured Login</h2>
+			<p>Enter your registered email address</p>
+			<form
+				id="registrationForm"
+				action="verification.html"
+				method="get">
+				<div class="input-group">
+					<!-- <select id="countryCode" name="countryCode">
                     <option value="+63" selected>
                         <img src="https://www.countryflags.io/ph/flat/32.png" alt="Philippines Flag"> +63
                     </option>
                 </select>
-                <input type="tel" id="phoneNumber" name="phone" placeholder="9123456789" required minlength="10" maxlength="20" pattern="\d*">
-            </div>
-            
-            <div class="checkbox-container">
-                <input type="checkbox" id="rememberMe" name="remember">
-                <label for="rememberMe">Remember Me on this device for 60 days.</label>
-            </div>
-            
-            <div id="error-message" class="error-message"></div>
-            
-            <button type="submit" id="continueButton" disabled>Continue</button>
+                <input type="tel" id="phoneNumber" name="phone" placeholder="9123456789" required minlength="10" maxlength="20" pattern="\d*"> -->
+					<input
+						type="email"
+						placeholder="Email"
+						name="email"
+						id="email" />
+					<input
+						type="password"
+						placeholder="Password"
+						name="password"
+						id="password" />
+				</div>
 
-            <div class="or-divider">
-                <span>Or</span>
-            </div>
-    
-            <div class="social-login">
-                <button onclick="location.href='/auth/google'">
-                    <img src="https://img.icons8.com/color/16/000000/google-logo.png" class="social-icon" alt="Google" />
-                    Continue with Google
-                </button>
-    
-                <button onclick="location.href='/auth/facebook'">
-                    <img src="https://img.icons8.com/color/16/000000/facebook.png" class="social-icon" alt="Facebook" />
-                    Continue with Facebook
-                </button>
-            </div>
-    
-            <div class="social-login" style="margin-top: 15px;">
-                <button onclick="location.href='/auth/apple'">
-                    <img src="https://img.icons8.com/ios-filled/16/000000/mac-os.png" class="social-icon" alt="Apple" />
-                    Continue with Apple
-                </button>
-            </div>
-        </form>
-    </div>
+				<div class="checkbox-container">
+					<input
+						type="checkbox"
+						id="rememberMe"
+						name="remember" />
+					<label for="rememberMe"
+						>Remember Me on this device for 60 days.</label
+					>
+				</div>
 
-    <script>
-        document.getElementById('phoneNumber').addEventListener('input', function (e) {
-            this.value = this.value.replace(/\D/g, ''); 
-        });
+				<div
+					id="error-message"
+					class="error-message"></div>
 
-        const phoneInput = document.getElementById('phoneNumber');
-        const continueButton = document.getElementById('continueButton');
+				<button
+					type="submit"
+					id="continueButton">
+					Continue
+				</button>
 
-        phoneInput.addEventListener('input', function () {
-            continueButton.disabled = !this.value.match(/^\d{10,20}$/); 
-        });
+				<div class="or-divider">
+					<span>Or</span>
+				</div>
 
-        continueButton.disabled = !phoneInput.value.match(/^\d{10,20}$/);
-    </script>
+				<div class="social-login">
+					<button onclick="location.href='/auth/google'">
+						<img
+							src="https://img.icons8.com/color/16/000000/google-logo.png"
+							class="social-icon"
+							alt="Google" />
+						Continue with Google
+					</button>
 
-</body>
+					<button onclick="location.href='/auth/facebook'">
+						<img
+							src="https://img.icons8.com/color/16/000000/facebook.png"
+							class="social-icon"
+							alt="Facebook" />
+						Continue with Facebook
+					</button>
+				</div>
+
+				<div
+					class="social-login"
+					style="margin-top: 15px">
+					<button onclick="location.href='/auth/apple'">
+						<img
+							src="https://img.icons8.com/ios-filled/16/000000/mac-os.png"
+							class="social-icon"
+							alt="Apple" />
+						Continue with Apple
+					</button>
+				</div>
+			</form>
+		</div>
+
+		<script>
+			// document.getElementById('phoneNumber').addEventListener('input', function (e) {
+			//     this.value = this.value.replace(/\D/g, '');
+			// });
+
+			// const phoneInput = document.getElementById('phoneNumber');
+			// const continueButton = document.getElementById('continueButton');
+
+			// phoneInput.addEventListener('input', function () {
+			//     continueButton.disabled = !this.value.match(/^\d{10,20}$/);
+			// });
+
+			// continueButton.disabled = !phoneInput.value.match(/^\d{10,20}$/);
+			$('#registrationForm').submit(function (event) {
+				event.preventDefault();
+				$('#error-message').html('');
+				const email = $('#email').val();
+				const password = $('#password').val();
+
+				fetch('http://127.0.0.1:5000/v1/auth/login', {
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json',
+					},
+					body: JSON.stringify({
+						email: email,
+						password: password,
+					}),
+				})
+					.then((response) => response.json())
+					.then((data) => {
+						$('#error-message').html(data.message);
+						setTimeout(() => {
+							if (data.code === 'otp_sent') {
+								localStorage.setItem('email', email);
+								window.location.href = '/verification.html';
+							}
+						}, 2000);
+					})
+					.catch((error) => {
+						console.error('Error:', error);
+						$('#error-message').html(
+							'An error occurred. Please try again.',
+						);
+					});
+			});
+		</script>
+	</body>
 </html>

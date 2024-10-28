@@ -7,6 +7,7 @@
 			content="width=device-width, initial-scale=1.0" />
 		<title>Sign Up</title>
 		<script
+			async
 			src="https://code.jquery.com/jquery-3.7.1.slim.min.js"
 			integrity="sha256-kmHvs0B+OpCW5GVHUNjv9rOmY0IvSIRcf7zGUDTDQM8="
 			crossorigin="anonymous"></script>
@@ -159,24 +160,26 @@
 						return;
 					}
 
-					$.ajax({
-						url: 'http://127.0.0.1:5000/create-new-user',
+					fetch('http://127.0.0.1:5000/v1/auth/create-new-account', {
 						method: 'POST',
-						data: {
-							firstName,
-							lastName,
-							email,
-							phoneNumber,
-							password,
-							rememberMe,
+						headers: {
+							'Content-Type': 'application/json',
 						},
-						success: function (response) {
-							console.log(response);
-						},
-						error: function (error) {
-							console.log(error);
-						},
-					});
+						body: JSON.stringify({
+							first_name: firstName,
+							last_name: lastName,
+							email: email,
+							phone_number: phoneNumber,
+							password: password,
+						}),
+					})
+						.then((response) => response.json())
+						.then((data) => {
+							console.log(data);
+						})
+						.catch((error) => {
+							console.error('Error:', error);
+						});
 				});
 			});
 		</script>
