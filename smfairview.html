@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Parking Slot</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #ffffff;
+            font-family: Arial, sans-serif;
+            height: 100vh;
+            margin: 0;
+            padding: 0;
+        }
+
+        .navbar {
+            position: fixed;
+               top: 0;
+               width: 100%;
+               height: 80px;
+               background: #D9D9D9; 
+               display: flex;
+               justify-content: space-between;
+               align-items: center;
+               padding: 0 20px;
+               z-index: 100;
+               box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1)
+        }
+
+        .navbar .logo {
+            display: flex;
+            align-items: center;
+            margin-right: 20px;
+        }
+
+        .navbar .logo img {
+            max-height: 110px; 
+            width: auto; 
+            margin-right: 10px;
+        }
+
+        .navbar .search-bar1 {
+            flex-shrink: 0;
+            width: 500px;
+            margin-right: 20px;
+        }
+
+        .navbar .search-bar1 input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            outline: none;
+        }
+
+        .navbar .profile-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #767184;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #000;
+            font-size: 20px;
+            cursor: pointer;
+            margin-left: auto;
+        }
+
+        .slide-menu {
+            position: fixed;
+            top: 60px; /* Adjust based on navbar height */
+            right: -220px; /* Hide off-screen */
+            width: 220px;
+            background-color: #D9D9D9;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            transition: right 0.3s ease;
+            z-index: 999; /* Above everything else */
+            border-radius: 8px;
+            overflow: hidden; /* Round corners */
+        }
+
+        .slide-menu.open {
+            right: 0; /* Slide in */
+        }
+
+        .slide-menu ul {
+            list-style: none;
+            padding: 10px;
+        }
+
+        .slide-menu ul li {
+            margin: 15px 0;
+            cursor: pointer;
+            color: #101010;
+            text-decoration: none;
+            padding: 10px 15px;
+            border-radius: 5px; /* Round corners for buttons */
+            transition: background-color 0.3s; /* Smooth background transition */
+        }
+
+        .slide-menu ul li:hover {
+            background-color: #767184; /* Hover effect */
+            color: white; /* Change text color on hover */
+        }
+
+        .parking-info {
+            padding-top: 180px; /* Increased padding for more space */
+            padding: 100px;
+        }
+
+        .parking-info .breadcrumbs {
+            margin-bottom: 20px; /* Add margin for spacing */
+            padding-top: 20px; /* Move down the breadcrumbs */
+        }
+
+        .parking-info h2 {
+            margin-top: 0;
+            color: #101010;
+        }
+
+        .status {
+            font-size: 14px;
+        }
+
+        .availability-key {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .availability-key .key-item {
+            margin-right: 10px;
+            display: flex;
+            align-items: center;
+        }
+
+        .availability-key .key-item span {
+            display: inline-block;
+            width: 15px;
+            height: 15px;
+            margin-right: 5px;
+        }
+
+        .key-free {
+            background-color: #66EA28;
+        }
+
+        .key-busy {
+            background-color: #EA2834;
+        }
+
+        .parking-slots {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 10px;
+        }
+
+        .slot {
+            width: 100%;
+            padding: 20px 0;
+            text-align: center;
+            border-radius: 4px;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .slot.free {
+            background-color: #66EA28;
+        }
+
+        .slot.busy {
+            background-color: #EA2834;
+        }
+
+        .tabs {
+            display: flex;
+            gap: 20px;
+            margin-top: 10px;
+        }
+
+        .tabs .tab {
+            cursor: pointer;
+            font-weight: bold;
+            color: #101010;
+            text-decoration: underline;
+            transition: color 0.3s; /* Smooth transition for hover */
+        }
+
+        .tabs .tab:hover {
+            color: #767184; /* Change color on hover */
+        }
+
+        .active-tab {
+            color: #767184; /* Color for the active tab */
+        }
+
+        .breadcrumbs {
+            cursor: pointer;
+            color: #000000;
+        }
+
+        .button-link {
+            background-color: transparent;
+            border: none;
+            color: #000000;
+            font-weight: bold;
+            cursor: pointer;
+            text-decoration: underline;
+        }
+
+        .button-link:hover, .breadcrumbs span:hover {
+            color: #D9D9D9;
+        }
+
+        /* Map button styles */
+        .map-button {
+            margin-top: 20px; /* Space above the button */
+            padding: 10px 20px;
+            background-color: #767184; /* Green color */
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.3s;
+            position: fixed; /* Fixed position for the button */
+            right: 50px; /* Align to the right */
+            bottom: 20px; /* Position from the bottom */
+        }
+
+        .map-button:hover {
+            background-color: #45a049; /* Darker green on hover */
+        }
+
+        .totals {
+            margin-top: 20px; /* Space for totals */
+            font-weight: bold;
+            color: #101010;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo" onclick="navigateHome()">
+            <img src="nearby_logo.png" alt="Logo">
+        </div>
+        <div class="search-bar1">
+            <input type="search" placeholder="Search location">
+        </div>
+        <div class="profile-icon" onclick="toggleMenu()">
+            <!-- User profile circle (if needed) -->
+        </div>
+    </nav>
+
+    <div class="slide-menu" id="slideMenu">
+        <ul>
+            <li onclick="logout()">Log Out</li>
+        </ul>
+    </div>
+
+    <div class="parking-info">
+        <div class="breadcrumbs">
+            <button class="button-link" onclick="navigateHome()">Home</button> >
+            <button class="button-link" onclick="navigateParking()">Parking</button> > <span style="color: #767184;">SM Fairview</span>
+        </div>
+        <h2 id="pageTitle">SM Fairview</h2>
+        <div class="status">Opening Hours: Today 02:03 - 04:09</div>
+
+        <div class="tabs">
+            <div class="tab active-tab" id="fourWheelsTab" onclick="showSlots('fourWheels', this)">Four Wheel</div>
+            <div class="tab" id="threeWheelsTab" onclick="showSlots('threeWheels', this)">Three Wheel</div>
+            <div class="tab" id="twoWheelsTab" onclick="showSlots('twoWheels', this)">Two Wheel</div>
+        </div>
+
+        <div class="availability-key">
+            <div class="key-item">
+                <span class="key-free"></span> Free
+            </div>
+            <div class="key-item">
+                <span class="key-busy"></span> Busy
+            </div>
+        </div>
+
+        <div class="totals" id="totals"></div>
+
+        <div class="parking-slots" id="parkingSlots">
+            <h2>SM Parking</h2>
+            <div class="slots" id="fourWheelsSlots"></div>
+            <div class="slots hidden" id="threeWheelsSlots"></div>
+            <div class="slots hidden" id="twoWheelsSlots"></div>
+        </div>
+    </div>
+
+    <button class="map-button" onclick="navigateMap()">Map</button>
+
+    <script>
+        function displaySlots(count) {
+            const parkingSlotsDiv = document.getElementById('parkingSlots');
+            const totalsDiv = document.getElementById('totals');
+            parkingSlotsDiv.innerHTML = ''; // Clear previous slots
+
+            let freeCount = 0;
+            let busyCount = 0;
+
+            for (let i = 1; i <= count; i++) {
+                const status = Math.random() < 0.5 ? 'free' : 'busy'; // Randomly assign status
+                const slotDiv = document.createElement('div');
+                slotDiv.className = `slot ${status}`;
+                parkingSlotsDiv.appendChild(slotDiv);
+
+                if (status === 'free') {
+                    freeCount++;
+                } else {
+                    busyCount++;
+                }
+            }
+
+            totalsDiv.innerText = `Total Free: ${freeCount}, Total Busy: ${busyCount}`;
+        }
+
+        function toggleMenu() {
+            const slideMenu = document.getElementById('slideMenu');
+            slideMenu.classList.toggle('open');
+        }
+
+        function navigateHome() {
+            window.location.href = 'home.html';
+        }
+
+        function navigateParking() {
+            window.location.href = 'parking.html';
+        }
+
+        function navigateMap() {
+            window.location.href = 'map.html';
+        }
+
+        function showSlots(type, tabElement) {
+            const tabs = document.querySelectorAll('.tab');
+            tabs.forEach(tab => tab.classList.remove('active-tab'));
+            tabElement.classList.add('active-tab');
+
+            displaySlots(30); // Adjust this number based on your requirements
+        }
+    </script>
+</body>
+</html>

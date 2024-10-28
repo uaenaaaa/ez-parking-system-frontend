@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+        }
+
+        .settings-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .button-row {
+            display: flex;
+            gap: 15px;
+        }
+
+        .setting-button {
+            width: 180px; /* Increased width */
+            height: 60px; /* Increased height */
+            background-color: #767184;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 18px; /* Increased font size */
+            transition: background-color 0.3s;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .setting-button:hover {
+            background-color: #736f75;
+        }
+
+        .input-container {
+            display: flex;
+            align-items: center;
+            margin-top: 10px;
+            width: 250px; /* Width for the input containers */
+            justify-content: space-between;
+        }
+
+        .number-input {
+            width: 80px; /* Increased width */
+            padding: 10px; /* Increased padding */
+            text-align: center;
+            border: none;
+            border-radius: 5px;
+            background-color: #e0e0e0;
+            font-size: 16px; /* Increased font size */
+        }
+
+        .button-container {
+            display: flex;
+            gap: 15px; /* Space between buttons */
+            margin-top: 20px; /* Add some space above the buttons */
+        }
+
+        .save-button,
+        .back-button {
+            width: 180px; /* Increased width */
+            height: 60px; /* Increased height */
+            background-color: #767184;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 18px; /* Increased font size */
+            transition: background-color 0.3s;
+        }
+
+        .save-button:hover,
+        .back-button:hover {
+            background-color: #736f75;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Settings</h1>
+
+    <div class="settings-container">
+        <div class="button-row">
+            <button class="setting-button" onclick="viewTerms()">Terms of Service</button>
+            <button class="setting-button" onclick="viewPrivacy()">Privacy Policy</button>
+        </div>
+        
+        <div class="input-container">
+            <span>Number of Cashiers:</span>
+            <input type="number" class="number-input" value="1" min="1" id="cashierCount">
+        </div>
+        <div class="input-container">
+            <span>Parking Slots:</span>
+            <input type="number" class="number-input" value="20" min="0" id="parkingSlots">
+        </div>
+        <div class="input-container">
+            <span>Opening Hours:</span>
+            <input type="time" class="number-input" id="openingHours">
+        </div>
+        <div class="input-container">
+            <span>Closing Hours:</span>
+            <input type="time" class="number-input" id="closingHours">
+        </div>
+    </div>
+
+    <div class="button-container">
+        <button class="save-button" onclick="saveSettings()">Save</button> <!-- Save button -->
+        <button class="back-button" onclick="goBack()">Back to Home</button> <!-- Back to Home button -->
+    </div>
+
+    <script>
+        function viewTerms() {
+            alert('Terms of Service functionality not implemented yet.');
+        }
+
+        function viewPrivacy() {
+            alert('Privacy Policy functionality not implemented yet.');
+        }
+
+        function saveSettings() {
+            const cashierCount = document.getElementById('cashierCount').value;
+            const parkingSlots = document.getElementById('parkingSlots').value;
+            const openingHours = document.getElementById('openingHours').value;
+            const closingHours = document.getElementById('closingHours').value;
+
+            alert(`Settings saved successfully!\nNumber of Cashiers: ${cashierCount}\nParking Slots: ${parkingSlots}\nOpening Hours: ${openingHours}\nClosing Hours: ${closingHours}`);
+            
+            setTimeout(() => {
+                window.location.href = 'ownerlp2.html'; 
+            }, 1000); 
+        }
+
+        function goBack() {
+            window.location.href = 'ownerlp2.html'; 
+        }
+    </script>
+
+</body>
+</html>

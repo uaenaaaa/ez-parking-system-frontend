@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verification</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #767184;
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            background-color: #a0a0a0;
+            padding: 50px;
+            border-radius: 10px;
+            width: 300px;
+            text-align: center;
+        }
+
+        .container h2 {
+            margin-bottom: 20px;
+        }
+
+        .input-field {
+            width: 100%;
+            padding: 7px;
+            margin: 12px 0;
+            border-radius: 5px;
+            border: none;
+            font-size: 16px;
+        }
+
+        .btn {
+            background-color: #767184;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .toggle-btn {
+            background: none;
+            border: none;
+            color: #ffffff;
+            cursor: pointer;
+            font-size: 14px;
+            margin-top: 10px;
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Verification</h2>
+    <form id="accountForm">
+        <!-- Email field -->
+        <input type="email" id="email" class="input-field" placeholder="Enter your email address" required>
+
+        <!-- Phone number field (hidden by default) -->
+        <input type="tel" id="phone" class="input-field" placeholder="Enter your phone number" style="display:none;" required>
+
+        <!-- Continue Button -->
+        <button type="submit" class="btn">Send verification code</button>
+    </form>
+
+    <!-- Toggle Button -->
+    <button id="toggleButton" class="toggle-btn" onclick="toggleInput()">Verify by mobile number</button>
+</div>
+
+<script>
+    let isEmail = true;
+
+    function toggleInput() {
+        const emailInput = document.getElementById('email');
+        const phoneInput = document.getElementById('phone');
+        const toggleButton = document.getElementById('toggleButton');
+
+        if (isEmail) {
+            emailInput.style.display = 'none';
+            phoneInput.style.display = 'block';
+            phoneInput.required = true;
+            emailInput.required = false;
+            toggleButton.textContent = 'Verify by email address';
+        } else {
+            emailInput.style.display = 'block';
+            phoneInput.style.display = 'none';
+            emailInput.required = true;
+            phoneInput.required = false;
+            toggleButton.textContent = 'Verify by mobile number';
+        }
+
+        isEmail = !isEmail;
+    }
+
+    // Validation for phone input
+    document.getElementById('phone').addEventListener('input', function (event) {
+        this.value = this.value.replace(/[^0-9]/g, ''); // Allow only numbers
+    });
+
+    document.getElementById('accountForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+        // Redirect to ownersignupv2.html after form submission
+        window.location.href = 'ownersignupv2.html';
+    });
+</script>
+
+</body>
+</html>

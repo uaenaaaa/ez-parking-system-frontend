@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vehicle Entry Monitoring</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+        }
+
+        .vehicle-type-container {
+            display: flex;
+            gap: 20px; /* Space between buttons */
+            margin-bottom: 20px;
+        }
+
+        .vehicle-type-button {
+            width: 150px;
+            height: 100px; /* Box-shaped button */
+            background-color: #767184;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 18px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: background-color 0.3s;
+        }
+
+        .vehicle-type-button:hover {
+            background-color: #736f75;
+        }
+
+        .slots-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            justify-content: center;
+            margin-bottom: 20px; /* Space below slots */
+        }
+
+        .slot-button {
+            width: 80px;
+            height: 80px;
+            background-color: #d9d9d9; /* Default background for occupied slots */
+            color: #333;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: background-color 0.3s;
+        }
+
+        .slot-button.available {
+            background-color: #66EA28; /* Green background for available slots */
+            color: white;
+        }
+
+        .slot-button:hover {
+            background-color: #c0c0c0;
+        }
+
+        .occupied {
+            background-color: #ff4d4d;
+            color: white;
+            cursor: not-allowed;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .back-button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #767184; /* Blue background for back button */
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+
+        .back-button:hover {
+            background-color: #736f75; /* Darker blue on hover */
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Select Vehicle Type</h1>
+
+    <div class="vehicle-type-container">
+        <button class="vehicle-type-button" onclick="selectVehicle('2 Wheels')">2 Wheel</button>
+        <button class="vehicle-type-button" onclick="selectVehicle('3 Wheels')">3 Wheel</button>
+        <button class="vehicle-type-button" onclick="selectVehicle('4 Wheels')">4 Wheel</button>
+    </div>
+
+    <div class="slots-container hidden" id="slotsContainer">
+        <!-- Slots will be dynamically generated here -->
+    </div>
+
+    <button class="back-button" onclick="goBack()">Back to Home</button> <!-- Back button -->
+
+    <script>
+        const occupiedSlots = new Set(); // Track occupied slots
+
+        function selectVehicle(vehicleType) {
+            alert(`You selected: ${vehicleType}`);
+            generateSlots(vehicleType);
+        }
+
+        function generateSlots(vehicleType) {
+            const slotsContainer = document.getElementById('slotsContainer');
+            slotsContainer.innerHTML = ''; // Clear previous slots
+            slotsContainer.classList.remove('hidden');
+
+            let slotCount;
+
+            switch (vehicleType) {
+                case '2 Wheels':
+                    slotCount = 20;
+                    break;
+                case '3 Wheels':
+                    slotCount = 10;
+                    break;
+                case '4 Wheels':
+                    slotCount = 15;
+                    break;
+                default:
+                    return;
+            }
+
+            for (let i = 1; i <= slotCount; i++) {
+                const slotButton = document.createElement('button');
+                slotButton.className = 'slot-button available'; // Add the available class for styling
+                slotButton.innerText = `Available`; // Change text to "Available"
+                slotButton.onclick = () => registerSlot(slotButton, vehicleType);
+                slotsContainer.appendChild(slotButton);
+            }
+        }
+
+        function registerSlot(slotButton, vehicleType) {
+            if (slotButton.classList.contains('occupied')) {
+                alert(`This slot is already occupied.`);
+                return;
+            }
+
+            // Register the slot
+            occupiedSlots.add(slotButton);
+            slotButton.classList.add('occupied');
+            slotButton.classList.remove('available'); // Remove available class
+            slotButton.innerText = `Occupied`; // Change text to indicate occupied status
+            alert(`You registered ${vehicleType} in a slot.`);
+            slotButton.onclick = null; // Disable further clicks
+        }
+
+        function goBack() {
+            window.location.href = 'ownerlp2.html'; // Redirect to ownerlp2.html
+        }
+    </script>
+
+</body>
+</html>

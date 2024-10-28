@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Owner Form</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+        body {
+        background-color: #767184;
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat; 
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+        width: 100%;
+        }
+
+        header {
+            background-color: #767184;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 30px;
+            width: 100%;
+            margin-top: 90px;
+        }
+
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 85px;
+            background-color: #D9D9D9; 
+            display: flex;
+            align-items: center;
+            padding-left: 20px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .navbar .logo img {
+            height: 110px; 
+            width: auto;
+        }
+
+        .container {
+            background-color: white;
+            border-radius: 10px;
+            padding: 30px;
+            width: 100%; 
+            max-width: 900px; 
+            box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 22px;
+            color: #333;
+            text-align: center;
+            margin-bottom: 15px;
+        }
+
+        p {
+            font-size: 14px;
+            color: #666;
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        h2 {
+            font-size: 18px;
+            color: #333;
+            text-align: left;
+            margin-bottom: 15px;
+        }
+
+        label {
+            font-size: 14px;
+            color: #333;
+            margin-bottom: 5px;
+            display: block;
+            text-align: left;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="password"],
+        select {
+            width: 200%;
+            padding: 10px;
+            margin: 10px 0 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .form-row {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .form-row .column {
+            width: 48%;
+        }
+
+        .important-note {
+            font-size: 12px;
+            color: #666;
+            margin-top: -15px;
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .file-input {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            gap: 10px;
+        }
+
+        .file-input input[type="file"] {
+            flex-grow: 1;
+            margin-right: 10px;
+            padding: 8px;
+        }
+
+        .btn {
+            background-color: #767184;
+            color: white;
+            border: none;
+            padding: 5px 15px;
+            font-size: 12px;
+            cursor: pointer;
+            width: auto;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+            margin-top: 20px;
+            align-self: self-end;
+        }
+
+        .btn:hover {
+            background-color: #6f6b7a;
+        }
+
+        .hours-container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            margin-top: 20px;
+            max-width: 600px;
+        }
+
+        .day {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            justify-content: space-between;
+        }
+
+        .day-name {
+            flex: 1;
+            color: #333;
+        }
+
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 34px;
+            height: 20px;
+            margin-left: 10px;
+            margin-right: 10px;
+        }
+
+        .switch input {
+            display: none;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 34px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 12px;
+            width: 12px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked + .slider {
+            background-color: #767184;
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(14px);
+        }
+
+        .time-input {
+            display: flex;
+            align-items: center;
+        }
+
+        .time-input input {
+            width: 120px;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            outline: none;
+        }
+
+        .time-input input:disabled {
+            background-color: #f4f4f4;
+        }
+
+        #overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #00000080;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            display: none;
+        }
+
+        .overlay-content {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="logo">
+                <a href="index.html"><img src="nearby_logo.png" alt="EZParking Logo"></a>
+            </div>
+        </nav>
+    </header>
+    
+    <div class="container">
+        <h1>Hi Parking Owners! This is your Sign Up Form.</h1>
+        <p>Please fill in your contact information to register your journey with us.</p>
+
+        <form id="ownerForm">
+            <div class="form-section">
+                <h2>Basic Information*</h2>
+                <div class="form-row">
+                    <div class="column">
+
+                        <label for="firstName">First Name:</label><br>
+                        <input type="text" id="firstName" name="firstName" required><br><br>
+                
+                        <label for="middleName">Middle Name (Optional):</label><br>
+                        <input type="text" id="middleName" name="middleName"><br><br>
+                
+                        <label for="lastName">Last Name:</label><br>
+                        <input type="text" id="lastName" name="lastName" required><br><br>
+                
+                        <label for="suffix">Suffix (Optional):</label><br>
+                        <input type="text" id="suffix" name="suffix"><br><br>
+
+                        <label for="phone-number">Phone Number</label>
+                        <div class="phone-row">:</label><br>
+                        <input type="text" id="phone-number" placeholder="09123456789" style="width: 200%; padding: 10px;" required>
+                     </div>
+
+                <p class="important-note">
+                    <strong>IMPORTANT:</strong> This is for verification purposes only and will not be shared publicly.
+                </p>
+
+                <h2>Company Information</h2>
+                <label for="company-name">Registered Business Name</label>
+                <input type="text" id="company-name" name="company-name" placeholder="Your registered business name" required>
+
+                <label for="business-address">Business Address</label>
+                <input type="text" id="business-address" name="business-address" placeholder="Your registered business address" required>
+
+                <label for="tin">Tax ID Number (TIN)</label>
+                <input type="text" id="tin" name="tin" placeholder="Enter your Tax ID Number here">
+
+                <label for="uploadFile">Upload Supporting Document (e.g., PDF, Images)</label>
+                <div class="file-input">
+                <input type="file" id="uploadFile" name="uploadFile" accept=".pdf,.png,.jpg,.jpeg" required aria-label="Supporting Document">
+            </div>
+
+                <label for="idAttachmentFront">Attach Valid ID (Front):</label>
+                <div class="file-input">
+                <input type="file" id="idAttachmentFront" name="idAttachmentFront" accept=".pdf, .jpg, .jpeg, .png" required aria-label="Valid ID Front">
+            </div>
+
+               <label for="idAttachmentBack">Attach Valid ID (Back):</label>
+               <div class="file-input">
+               <input type="file" id="idAttachmentBack" name="idAttachmentBack" accept=".pdf, .jpg, .jpeg, .png" required aria-label="Valid ID Back">
+            </div>
+                
+            <h2>Operating Hours</h2>
+            <div class="day">
+                <span class="day-name">Monday</span>
+                <label class="switch">
+                    <input type="checkbox" id="monday-switch">
+                    <span class="slider"></span>
+                </label>
+                <div class="time-input">
+                    <input type="time" id="monday-start" disabled>
+                    <input type="time" id="monday-end" disabled>
+                </div>
+            </div>
+            <div class="day">
+                <span class="day-name">Tuesday</span>
+                <label class="switch">
+                    <input type="checkbox" id="tuesday-switch">
+                    <span class="slider"></span>
+                </label>
+                <div class="time-input">
+                    <input type="time" id="tuesday-start" disabled>
+                    <input type="time" id="tuesday-end" disabled>
+                </div>
+            </div>
+            <div class="day">
+                <span class="day-name">Wednesday</span>
+                <label class="switch">
+                    <input type="checkbox" id="wednesday-switch">
+                    <span class="slider"></span>
+                </label>
+                <div class="time-input">
+                    <input type="time" id="wednesday-start" disabled>
+                    <input type="time" id="wednesday-end" disabled>
+                </div>
+            </div>
+            <div class="day">
+                <span class="day-name">Thursday</span>
+                <label class="switch">
+                    <input type="checkbox" id="thursday-switch">
+                    <span class="slider"></span>
+                </label>
+                <div class="time-input">
+                    <input type="time" id="thursday-start" disabled>
+                    <input type="time" id="thursday-end" disabled>
+                </div>
+            </div>
+            <div class="day">
+                <span class="day-name">Friday</span>
+                <label class="switch">
+                    <input type="checkbox" id="friday-switch">
+                    <span class="slider"></span>
+                </label>
+                <div class="time-input">
+                    <input type="time" id="friday-start" disabled>
+                    <input type="time" id="friday-end" disabled>
+                </div>
+            </div>
+            <div class="day">
+                <span class="day-name">Saturday</span>
+                <label class="switch">
+                    <input type="checkbox" id="saturday-switch">
+                    <span class="slider"></span>
+                </label>
+                <div class="time-input">
+                    <input type="time" id="saturday-start" disabled>
+                    <input type="time" id="saturday-end" disabled>
+                </div>
+            </div>
+            <div class="day">
+                <span class="day-name">Sunday</span>
+                <label class="switch">
+                    <input type="checkbox" id="sunday-switch">
+                    <span class="slider"></span>
+                </label>
+                <div class="time-input">
+                    <input type="time" id="sunday-start" disabled>
+                    <input type="time" id="sunday-end" disabled>
+                </div>
+            </div>
+                </div>
+                    
+                <button type="submit" class="btn">Register</button>
+            </div>
+        </form>
+    </div>
+
+    <div id="overlay">
+        <div class="overlay-content">
+            <h2>Successfully Registered!</h2>
+            <p>Your registration was successful. Click 'OK' to proceed.</p>
+            <button id="okButton" class="btn">OK</button>
+        </div>
+    </div>
+
+    <script>
+        const ownerForm = document.getElementById('ownerForm');
+        const overlay = document.getElementById('overlay');
+        const okButton = document.getElementById('okButton');
+
+        ownerForm.addEventListener('submit', function (event) {
+            event.preventDefault(); // Prevent the form from submitting normally
+            overlay.style.display = 'flex'; // Show the overlay
+        });
+
+        okButton.addEventListener('click', function () {
+            overlay.style.display = 'none'; // Hide the overlay
+            window.location.href = 'ownerlp2.html'; // Redirect to ownerlp2.html
+        });
+         // Enable/disable time inputs based on switch
+         const days = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
+        days.forEach(day => {
+            const switchElement = document.getElementById(`${day}-switch`);
+            const startInput = document.getElementById(`${day}-start`);
+            const endInput = document.getElementById(`${day}-end`);
+
+            switchElement.addEventListener('change', function() {
+                startInput.disabled = !this.checked;
+                endInput.disabled = !this.checked;
+            });
+        });
+    </script>
+</body>
+</html>
