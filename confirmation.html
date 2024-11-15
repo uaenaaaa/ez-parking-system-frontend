@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reservation Confirmation</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+    font-family: 'Poppins', sans-serif;
+    color: #333;
+    background: linear-gradient(135deg, #f0f0f5, #7c748f);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    padding: 20px;
+    padding-top: 40px; /* Added padding to the top */
+}
+
+.confirmation-container {
+    background-color: #fff;
+    padding: 40px 30px;
+    border-radius: 12px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 520px;
+    text-align: center;
+    position: relative;
+    margin-top: 20px; /* Added margin to push the container down */
+}
+
+
+        .confirmation-container::before {
+            content: "";
+            position: absolute;
+            top: -20%;
+            right: -20%;
+            width: 200%;
+            height: 200%;
+            background: rgba(143, 134, 168, 0.2);
+            border-radius: 50%;
+            z-index: -1;
+        }
+
+        .confirmation-container h2 {
+            font-size: 36px;
+            font-weight: 600;
+            margin-bottom: 25px;
+            color: #444; /* Darker color for better contrast */
+        }
+
+        .qr-code {
+            margin: 25px 0;
+            border-radius: 10px;
+            background-color: #f1f1f1;
+            padding: 15px;
+            display: inline-block;
+        }
+
+        .qr-code img {
+            width: 150px;
+            height: 150px;
+            border-radius: 8px;
+        }
+
+        .reservation-details {
+            font-size: 16px;
+            color: #555;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .reservation-details p {
+            margin: 8px 0;
+        }
+
+        .reservation-details strong {
+            color: #4CAF50;
+        }
+
+        .total-price {
+            font-size: 24px;
+            font-weight: 700;
+            color: #4CAF50;
+            margin-bottom: 20px;
+        }
+
+        .go-btn {
+    background-color: #8f86a8;
+    color: white;
+    border: none;
+    padding: 14px 24px;
+    border-radius: 8px;
+    font-size: 18px;
+    cursor: pointer;
+    width: 100%;
+    transition: background-color 0.3s, transform 0.3s;
+    margin-bottom: 20px; /* Increased margin-bottom for spacing */
+}
+
+/* Hover effect for the Go button */
+.go-btn:hover {
+    background-color: #7c748f; /* Darker shade on hover */
+    transform: translateY(-3px); /* Slight lift effect */
+}
+
+/* Active effect for the Go button */
+.go-btn:active {
+    transform: translateY(1px); /* Slight press effect */
+}
+
+.btn {
+    background-color: #7c748f;
+    color: white;
+    border: none;
+    padding: 14px 24px;
+    border-radius: 8px;
+    font-size: 18px;
+    cursor: pointer;
+    width: 100%;
+    transition: background-color 0.3s, transform 0.3s;
+    margin-bottom: 15px;
+}
+
+/* Hover effect for the Back to Home button */
+.btn:hover {
+    background-color: #7c748f; /* Darker green shade on hover */
+    transform: translateY(-3px); /* Slight lift effect */
+}
+
+/* Active effect for the Back to Home button */
+.btn:active {
+    transform: translateY(1px); /* Slight press effect */
+}
+
+    </style>
+</head>
+<body>
+
+    <div class="confirmation-container">
+        <h2>Reservation Confirmed</h2>
+
+        <!-- QR Code -->
+        <div class="qr-code">
+            <!-- Artificial QR Code -->
+            <img src="qr.png" alt="QR Code">
+        </div>
+
+        <!-- Reservation Details -->
+        <div class="reservation-details">
+            <p><strong>Parking Location:</strong> <span id="parking-location"></span></p>
+            <p><strong>Address:</strong> <span id="parking-address"></span></p>
+            <p><strong>Vehicle Type:</strong> <span id="vehicle-type"></span></p>
+            <p><strong>Pick-Up Date:</strong> <span id="pickup-date"></span></p>
+            <p><strong>Pick-Up Time:</strong> <span id="pickup-time"></span></p>
+            <p><strong>Drop-Off Time:</strong> <span id="dropoff-time"></span></p>
+        </div>
+
+        <!-- Total Price -->
+        <div class="total-price">
+            <p><strong>Total Price:</strong> ₱<span id="total-price">0</span></p>
+        </div>
+
+        <!-- Go Button (to open Google Maps directions) -->
+        <button class="go-btn" id="go-btn" onclick="window.location.href='mapex.html'">Go</button>
+
+        <!-- Back to Home Button -->
+        <button class="btn" onclick="window.location.href='userlp.html'">Back to Home</button>
+    </div>
+
+    <script>
+        // Sample data - Replace this with actual reservation data passed from the booking page
+        const reservationData = {
+            parkingLocation: 'One Parkade', // Parking location name
+            address: 'One Parkade, H22X+4WC, Taguig, Metro Manila', // Added address for parking location
+            vehicleType: 'Four-Wheel',
+            pickupDate: '2024-11-15',
+            pickupTime: '10:00',
+            dropoffTime: '12:00',
+            hourlyRate: 25, // Example hourly rate for four-wheel
+            duration: 2 // Example duration in hours
+        };
+
+        // Calculate total price
+        const totalPrice = reservationData.hourlyRate * reservationData.duration;
+
+        // Display reservation data
+        document.getElementById('parking-location').innerText = reservationData.parkingLocation;
+        document.getElementById('parking-address').innerText = reservationData.address;
+        document.getElementById('vehicle-type').innerText = reservationData.vehicleType;
+        document.getElementById('pickup-date').innerText = reservationData.pickupDate;
+        document.getElementById('pickup-time').innerText = reservationData.pickupTime;
+        document.getElementById('dropoff-time').innerText = reservationData.dropoffTime;
+        document.getElementById('total-price').innerText = totalPrice;
+
+       
+    </script>
+
+</body>
+</html>

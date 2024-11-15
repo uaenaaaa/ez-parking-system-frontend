@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Email Verification</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f5f5f5; /* Light gray background */
+        }
+        .container {
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 350px;
+        }
+        h2 {
+            color: #3c3b54; /* Darker text color */
+            margin-bottom: 20px;
+        }
+        label {
+            font-size: 14px;
+            color: #5a5a75; /* Subtle label color */
+        }
+        input[type="email"] {
+            width: 100%;
+            padding: 12px;
+            margin-top: 10px;
+            border: 1px solid #767184;
+            border-radius: 8px;
+            outline: none;
+            font-size: 15px;
+            color: #3c3b54;
+            transition: border-color 0.3s ease;
+        }
+        input[type="email"]:focus {
+            border-color: #767184; /* Primary accent color */
+        }
+        button {
+            margin-top: 25px;
+            width: 100%;
+            padding: 12px;
+            background-color: #767190; /* Primary accent color */
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #9d9d9d; /* Slightly darker shade for hover */
+        }
+        button:active {
+            background-color: #9d9d9d; /* Darker shade for active state */
+        }
+        .info-text {
+            font-size: 13px;
+            color: #767184;
+            margin-top: 15px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Email Verification</h2>
+    <form id="email-form">
+        <label for="email">Enter your email:</label><br>
+        <input type="email" id="email" placeholder="e.g., user@example.com" required><br>
+        <button type="submit">Send Verification Code</button>
+        <p class="info-text">We'll send a verification code to your email.</p>
+    </form>
+</div>
+
+<script>
+    document.getElementById('email-form').addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        const email = document.getElementById('email').value;
+
+        if (email) {
+            alert(`A verification code (123456) was sent to ${email}`);
+            window.location.href = `entercodeff.html?email=${encodeURIComponent(email)}`;
+        }
+    });
+</script>
+
+</body>
+</html>

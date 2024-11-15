@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modern Parking POS System</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            background-color: #2c2f33;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            color: #fff;
+        }
+        .pos-container {
+            display: flex;
+            flex-direction: column;
+            width: 80%;
+            background-color: #1c1e22;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+        .slot-info {
+            display: flex;
+            justify-content: space-around;
+            padding: 20px;
+            background-color: #282b30;
+            border-bottom: 2px solid #3b3e45;
+        }
+        .slot-info div {
+            text-align: center;
+        }
+        .slot-info div span {
+            font-size: 20px;
+            font-weight: bold;
+        }
+        .menu-container {
+            display: flex;
+            padding: 20px;
+        }
+        .menu {
+            flex: 2;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+        }
+        .menu button {
+            background-color: #3b3e45;
+            border: none;
+            border-radius: 8px;
+            padding: 30px;
+            font-size: 18px;
+            color: #f0f0f0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .menu button:hover {
+            background-color: #4e525c;
+        }
+        .right-panel {
+            flex: 1.5;
+            background-color: #282b30;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .transaction-display {
+            background-color: #36393f;
+            padding: 10px;
+            border-radius: 8px;
+            flex-grow: 1;
+            overflow-y: auto;
+            margin-bottom: 15px;
+        }
+        .transaction-display div {
+            padding: 8px 0;
+            border-bottom: 1px solid #4f545c;
+        }
+        .payment-summary {
+            margin-bottom: 15px;
+        }
+        .payment-summary div {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+        }
+        .charge-button {
+            background-color: #3ba55d;
+            color: #fff;
+            border: none;
+            padding: 20px;
+            border-radius: 8px;
+            font-size: 20px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .charge-button:hover {
+            background-color: #2e8c4d;
+        }
+    </style>
+</head>
+<body>
+
+<div class="pos-container">
+    <!-- Slot Information -->
+    <div class="slot-info">
+        <div>
+            <span>Total Slots:</span>
+            <div id="total-slots">100</div>
+        </div>
+        <div>
+            <span>Available Slots:</span>
+            <div id="available-slots">100</div>
+        </div>
+        <div>
+            <span>Occupied Slots:</span>
+            <div id="occupied-slots">0</div>
+        </div>
+        <div>
+            <span>Reserved Slots:</span>
+            <div id="reserved-slots">0</div>
+        </div>
+    </div>
+
+    <!-- Menu and Right Panel -->
+    <div class="menu-container">
+        <!-- Vehicle Type Buttons -->
+        <div class="menu">
+            <button onclick="handleEntry('2 Wheels')">2 Wheels Entry</button>
+            <button onclick="handleEntry('3 Wheels')">3 Wheels Entry</button>
+            <button onclick="handleEntry('4 Wheels')">4 Wheels Entry</button>
+            <button onclick="handleExit()">Vehicle Exit</button>
+            <button onclick="reserveSlot()">Reserve Slot</button>
+            <button onclick="clearReservation()">Clear Reservation</button>
+        </div>
+
+        <!-- Right Panel -->
+        <div class="right-panel">
+            <!-- Transaction Display -->
+            <div class="transaction-display" id="transactionDisplay"></div>
+
+            <!-- Payment Summary -->
+            <div class="payment-summary">
+                <div>
+                    <span>Total Due:</span> <span id="total-due">₱0.00</span>
+                </div>
+            </div>
+
+            <!-- Charge Button -->
+            <button class="charge-button" onclick="charge()">CHARGE</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    let transactionDisplay = document.getElementById('transactionDisplay');
+    let totalDue = 0;
+    let totalSlots = 100;
+    let availableSlots = 100;
+    let occupiedSlots = 0;
+    let reservedSlots = 0;
+    const rates = { '2 Wheels': 10, '3 Wheels': 20, '4 Wheels': 30 };
+
+    function updateSlots() {
+        document.getElementById('total-slots').textContent = totalSlots;
+        document.getElementById('available-slots').textContent = availableSlots;
+        document.getElementById('occupied-slots').textContent = occupiedSlots;
+        document.getElementById('reserved-slots').textContent = reservedSlots;
+    }
+
+    function handleEntry(vehicleType) {
+        if (availableSlots > 0) {
+            availableSlots--;
+            occupiedSlots++;
+            const cost = rates[vehicleType];
+            totalDue += cost;
+
+            const item = document.createElement('div');
+            item.textContent = `${vehicleType} Entry - ₱${cost}`;
+            transactionDisplay.appendChild(item);
+
+            updateSlots();
+            updateTotalDue();
+        } else {
+            alert('No available slots');
+        }
+    }
+
+    function handleExit() {
+        if (occupiedSlots > 0) {
+            availableSlots++;
+            occupiedSlots--;
+            const item = document.createElement('div');
+            item.textContent = `Vehicle Exit`;
+            transactionDisplay.appendChild(item);
+
+            updateSlots();
+        } else {
+            alert('No vehicles to exit');
+        }
+    }
+
+    function reserveSlot() {
+        if (availableSlots > 0) {
+            availableSlots--;
+            reservedSlots++;
+            updateSlots();
+        } else {
+            alert('No available slots to reserve');
+        }
+    }
+
+    function clearReservation() {
+        if (reservedSlots > 0) {
+            reservedSlots--;
+            availableSlots++;
+            updateSlots();
+        }
+    }
+
+    function updateTotalDue() {
+        document.getElementById('total-due').textContent = `₱${totalDue.toFixed(2)}`;
+    }
+
+    function charge() {
+        if (totalDue > 0) {
+            alert(`Total Payment: ₱${totalDue.toFixed(2)}`);
+            transactionDisplay.innerHTML = '';
+            totalDue = 0;
+            updateTotalDue();
+        } else {
+            alert('No transactions to charge');
+        }
+    }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Account Settings</title>
+    <style>
+        /* General styling */
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #f0f0f5, #7c748f);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        /* Container styling */
+        .container {
+            background: #ffffff;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            width: 90%;
+            max-width: 500px;
+            text-align: center;
+            position: relative;
+        }
+
+        .container h2 {
+            color: #8f86a8;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+            text-align: left;
+        }
+
+        .form-group label {
+            font-weight: bold;
+            color: #333;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            resize: vertical;
+        }
+
+        .btn {
+            background-color: #8f86a8;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: 0.3s;
+            margin-top: 20px;
+        }
+
+        .btn:hover {
+            background-color: #6d5f90;
+        }
+
+        .notification {
+            display: none;
+            margin-top: 20px;
+            padding: 10px;
+            color: #28a745;
+            background-color: #d4edda;
+            border: 1px solid #c3e6cb;
+            border-radius: 5px;
+        }
+
+        /* Back Button */
+        .back-btn {
+            position: absolute;
+            top: 20px;
+            left: 50px;
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: #8f86a8;
+            padding-top: 430px;
+            
+        }
+
+        .back-btn:hover {
+            color: #6d5f90;
+        }
+
+        /* Save Button Position */
+        .save-btn-container {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 20px;
+        }
+
+        .save-btn-container button {
+            margin-left: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- Back Button -->
+        <button class="back-btn" onclick="window.location.href='ownerdashboard.html'">←</button>
+
+        <h2>Account Settings</h2>
+        <form id="account-form">
+            <div class="form-group">
+                <label for="owner-name">Owner Name</label>
+                <input type="text" id="owner-name" placeholder="Enter your name" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Email Address</label>
+                <input type="email" id="email" placeholder="Enter your email" required>
+            </div>
+            <div class="form-group">
+                <label for="phone">Phone Number</label>
+                <input type="tel" id="phone" placeholder="Enter your phone number" required>
+            </div>
+            <div class="form-group">
+                <label for="preferences">Preferences</label>
+                <textarea id="preferences" placeholder="Add any preferences or notes here"></textarea>
+            </div>
+        </form>
+
+        <!-- Save Changes Button -->
+        <div class="save-btn-container">
+            <button type="button" class="btn" id="save-btn" onclick="saveAccountSettings()" disabled>Save Changes</button>
+        </div>
+
+        <!-- Notification for successful save -->
+        <div id="notification" class="notification">Successfully saved! Returning to Dashboard...</div>
+    </div>
+
+    <script>
+        // Enable Save button when all required fields are filled
+        document.querySelectorAll('#account-form input').forEach(input => {
+            input.addEventListener('input', checkForm);
+        });
+
+        function checkForm() {
+            const ownerName = document.getElementById('owner-name').value;
+            const email = document.getElementById('email').value;
+            const phone = document.getElementById('phone').value;
+
+            // Enable the Save button only if all required fields are filled
+            const saveBtn = document.getElementById('save-btn');
+            if (ownerName && email && phone) {
+                saveBtn.disabled = false;
+            } else {
+                saveBtn.disabled = true;
+            }
+        }
+
+        function saveAccountSettings() {
+            const ownerName = document.getElementById('owner-name').value;
+            const email = document.getElementById('email').value;
+            const phone = document.getElementById('phone').value;
+
+            // Check if all required fields are filled
+            if (!ownerName || !email || !phone) {
+                alert('Please fill in all required fields.');
+                return;
+            }
+
+            // Simulate save action with delay
+            setTimeout(() => {
+                document.getElementById('notification').style.display = 'block';
+                
+                setTimeout(() => {
+                    document.getElementById('notification').style.display = 'none';
+                    window.location.href = 'ownerdashboard.html';
+                }, 2000); // Return to dashboard after 2 seconds
+            }, 500);
+        }
+    </script>
+
+</body>
+</html>

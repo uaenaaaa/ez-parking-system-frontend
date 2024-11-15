@@ -5,11 +5,6 @@
 		<meta
 			name="viewport"
 			content="width=device-width, initial-scale=1.0" />
-		<script
-			async
-			src="https://code.jquery.com/jquery-3.7.1.slim.min.js"
-			integrity="sha256-kmHvs0B+OpCW5GVHUNjv9rOmY0IvSIRcf7zGUDTDQM8="
-			crossorigin="anonymous"></script>
 		<title>Registration</title>
 		<style>
 			* {
@@ -90,36 +85,14 @@
 				margin-bottom: 20px;
 			}
 
-			.registration-form .input-group select {
-				border: none;
-				padding: 15px;
-				background-color: #f4f4f4;
-				cursor: pointer;
-				font-size: 16px;
-			}
-
-			.registration-form .input-group img {
-				width: 32px;
-				height: 22px;
-				margin-right: 15px;
-			}
-
-			.registration-form input[type='tel'] {
+			.registration-form input[type='email'] {
 				width: 100%;
 				padding: 15px;
 				border: none;
-				border-left: 1px solid #ccc;
 				border-radius: 0;
 				outline: none;
 				color: #000;
 				font-size: 16px;
-				-moz-appearance: textfield;
-			}
-
-			.registration-form input[type='tel']::-webkit-inner-spin-button,
-			.registration-form input[type='tel']::-webkit-outer-spin-button {
-				-webkit-appearance: none;
-				margin: 0;
 			}
 
 			.registration-form button {
@@ -214,38 +187,24 @@
 	<body>
 		<nav class="navbar">
 			<div class="logo">
-				<a href="index.html">
+				<a href="nearby.html">
 					<img
 						src="nearby_logo.png"
 						alt="NearbySpot Logo" />
 				</a>
 			</div>
 		</nav>
-
 		<div class="registration-form">
 			<h2>Secured Login</h2>
 			<p>Enter your registered email address</p>
-			<form
-				id="registrationForm"
-				action="verification.html"
-				method="get">
+			<form id="registrationForm">
 				<div class="input-group">
-					<!-- <select id="countryCode" name="countryCode">
-                    <option value="+63" selected>
-                        <img src="https://www.countryflags.io/ph/flat/32.png" alt="Philippines Flag"> +63
-                    </option>
-                </select>
-                <input type="tel" id="phoneNumber" name="phone" placeholder="9123456789" required minlength="10" maxlength="20" pattern="\d*"> -->
 					<input
 						type="email"
-						placeholder="Email"
+						id="email"
 						name="email"
-						id="email" />
-					<input
-						type="password"
-						placeholder="Password"
-						name="password"
-						id="password" />
+						placeholder="example@domain.com"
+						required />
 				</div>
 
 				<div class="checkbox-container">
@@ -264,7 +223,8 @@
 
 				<button
 					type="submit"
-					id="continueButton">
+					id="continueButton"
+					disabled>
 					Continue
 				</button>
 
@@ -273,7 +233,9 @@
 				</div>
 
 				<div class="social-login">
-					<button onclick="location.href='/auth/google'">
+					<button
+						type="button"
+						id="googleButton">
 						<img
 							src="https://img.icons8.com/color/16/000000/google-logo.png"
 							class="social-icon"
@@ -281,7 +243,9 @@
 						Continue with Google
 					</button>
 
-					<button onclick="location.href='/auth/facebook'">
+					<button
+						type="button"
+						id="facebookButton">
 						<img
 							src="https://img.icons8.com/color/16/000000/facebook.png"
 							class="social-icon"
@@ -293,7 +257,9 @@
 				<div
 					class="social-login"
 					style="margin-top: 15px">
-					<button onclick="location.href='/auth/apple'">
+					<button
+						type="button"
+						id="appleButton">
 						<img
 							src="https://img.icons8.com/ios-filled/16/000000/mac-os.png"
 							class="social-icon"
@@ -305,51 +271,80 @@
 		</div>
 
 		<script>
-			// document.getElementById('phoneNumber').addEventListener('input', function (e) {
-			//     this.value = this.value.replace(/\D/g, '');
-			// });
+			const emailInput = document.getElementById('email');
+			const continueButton = document.getElementById('continueButton');
 
-			// const phoneInput = document.getElementById('phoneNumber');
-			// const continueButton = document.getElementById('continueButton');
-
-			// phoneInput.addEventListener('input', function () {
-			//     continueButton.disabled = !this.value.match(/^\d{10,20}$/);
-			// });
-
-			// continueButton.disabled = !phoneInput.value.match(/^\d{10,20}$/);
-			$('#registrationForm').submit(function (event) {
-				event.preventDefault();
-				$('#error-message').html('');
-				const email = $('#email').val();
-				const password = $('#password').val();
-
-				fetch('http://127.0.0.1:5000/v1/auth/login', {
-					method: 'POST',
-					headers: {
-						'Content-Type': 'application/json',
-					},
-					body: JSON.stringify({
-						email: email,
-						password: password,
-					}),
-				})
-					.then((response) => response.json())
-					.then((data) => {
-						$('#error-message').html(data.message);
-						setTimeout(() => {
-							if (data.code === 'otp_sent') {
-								localStorage.setItem('email', email);
-								window.location.href = '/verification.html';
-							}
-						}, 2000);
-					})
-					.catch((error) => {
-						console.error('Error:', error);
-						$('#error-message').html(
-							'An error occurred. Please try again.',
-						);
-					});
+			emailInput.addEventListener('input', function () {
+				continueButton.disabled = !this.value.match(
+					/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/,
+				);
 			});
+
+			continueButton.disabled = !emailInput.value.match(
+				/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/,
+			);
+
+			document
+				.getElementById('googleButton')
+				.addEventListener('click', function () {
+					window.location.href =
+						'/auth/google?email=' +
+						encodeURIComponent(emailInput.value);
+				});
+
+			document
+				.getElementById('facebookButton')
+				.addEventListener('click', function () {
+					window.location.href =
+						'/auth/facebook?email=' +
+						encodeURIComponent(emailInput.value);
+				});
+
+			document
+				.getElementById('appleButton')
+				.addEventListener('click', function () {
+					window.location.href =
+						'/auth/apple?email=' +
+						encodeURIComponent(emailInput.value);
+				});
+
+			document
+				.getElementById('registrationForm')
+				.addEventListener('submit', function (event) {
+					event.preventDefault();
+					document.getElementById('error-message').innerHTML = '';
+					const email = emailInput.value;
+					const remember =
+						document.getElementById('rememberMe').checked;
+
+					localStorage.setItem('remember', remember);
+
+					fetch('https://127.0.0.1:5000/v1/auth/login', {
+						method: 'POST',
+						headers: {
+							'Content-Type': 'application/json',
+						},
+						body: JSON.stringify({
+							email: email,
+						}),
+					})
+						.then((response) => response.json())
+						.then((data) => {
+							document.getElementById('error-message').innerHTML =
+								data.message;
+							setTimeout(() => {
+								if (data.code === 'otp_sent') {
+									localStorage.setItem('email', email);
+									window.location.href = '/verification.html';
+								}
+							}, 2000);
+						})
+						.catch((error) => {
+							console.error('Error:', error);
+							document.getElementById('error-message').innerHTML =
+								'An error occurred. Please try again.';
+						});
+				});
 		</script>
 	</body>
 </html>

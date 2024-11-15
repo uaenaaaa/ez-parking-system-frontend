@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Parking Lot</title>
+    <style>
+        /* General styling */
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #f0f0f5, #7c748f);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        /* Container styling */
+        .container {
+            background: #ffffff;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            width: 90%;
+            max-width: 800px;
+            text-align: left;
+            position: relative;
+        }
+
+        .container h2 {
+            color: #8f86a8;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            font-weight: bold;
+            color: #333;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+
+        .form-group textarea {
+            resize: vertical;
+        }
+
+        /* Adjusted vehicle pricing group */
+        .vehicle-pricing-group {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-bottom: 30px;
+            width: 100%;
+        }
+
+        .vehicle-pricing-group .form-group {
+            position: relative;
+            width: 90%;
+        }
+
+        .vehicle-pricing-group .peso-sign {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 18px;
+            color: #333;
+        }
+
+        .vehicle-pricing-group input {
+            padding-left: 35px;
+            width: 100%; /* Ensure inputs don't overflow */
+        }
+
+        .btn {
+            background-color: #8f86a8;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: 0.3s;
+            font-size: 16px;
+            width: 100%;
+        }
+
+        .btn:hover {
+            background-color: #6d5f90;
+        }
+
+        /* Back Button (Arrow) */
+        .back-btn {
+            background: none;
+            border: none;
+            font-size: 30px;
+            cursor: pointer;
+            color: #8f86a8;
+        }
+
+        .back-btn:hover {
+            color: #6d5f90;
+        }
+
+        /* Button Container (Horizontal alignment inside container) */
+        .button-container {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+
+        /* Save Changes Button (Smaller and on the right side) */
+        .save-btn-container {
+            position: absolute;
+            right: 20px;
+            bottom: 20px;
+        }
+
+        .save-btn-container .btn {
+            padding: 8px 16px; /* Smaller padding */
+            font-size: 14px; /* Smaller text */
+            width: auto; /* Adjust width */
+        }
+
+        /* Notification */
+.notification {
+    display: none;
+    position: fixed;
+    top: 20px; /* Adjust this value to control how far from the top it is */
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 12px;
+    color: #28a745;
+    background-color: #d4edda;
+    border: 1px solid #c3e6cb;
+    border-radius: 5px;
+    text-align: center;
+    width: auto;
+    max-width: 80%; /* Ensure it doesn't stretch too wide */
+    z-index: 9999; /* Make sure it appears on top */
+}
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2>Manage Parking Lot</h2>
+        
+        <!-- Form for updating parking lot details -->
+        <form id="parking-form">
+            <div class="form-group">
+                <label for="parking-lot-name">Parking Lot Name</label>
+                <input type="text" id="parking-lot-name" placeholder="Enter parking lot name" required>
+            </div>
+            <div class="form-group">
+                <label for="capacity">Capacity</label>
+                <input type="number" id="capacity" placeholder="Enter the total capacity" required>
+            </div>
+            <div class="form-group">
+                <label for="location">Location</label>
+                <input type="text" id="location" placeholder="Enter parking lot location" required>
+            </div>
+            <div class="form-group">
+                <label for="description">Description</label>
+                <textarea id="description" placeholder="Add any details or description"></textarea>
+            </div>
+
+            <!-- Pricing per vehicle type -->
+            <div class="vehicle-pricing-group">
+                <div class="form-group">
+                    <label for="two-wheel-pricing">Pricing for 2-Wheel Vehicles (per hour)</label>
+                    <div style="position: relative;">
+                        <span class="peso-sign">₱</span>
+                        <input type="number" id="two-wheel-pricing" placeholder="Enter price for 2-wheel" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="three-wheel-pricing">Pricing for 3-Wheel Vehicles (per hour)</label>
+                    <div style="position: relative;">
+                        <span class="peso-sign">₱</span>
+                        <input type="number" id="three-wheel-pricing" placeholder="Enter price for 3-wheel" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="four-wheel-pricing">Pricing for 4-Wheel Vehicles (per hour)</label>
+                    <div style="position: relative;">
+                        <span class="peso-sign">₱</span>
+                        <input type="number" id="four-wheel-pricing" placeholder="Enter price for 4-wheel" required>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+        <!-- Button Container for Back Arrow -->
+        <div class="button-container">
+            <!-- Back Arrow Button -->
+            <button class="back-btn" onclick="window.location.href='ownerdashboard.html'">←</button>
+        </div>
+
+        <!-- Save Button (Smaller and positioned on the right side) -->
+        <div class="save-btn-container">
+            <button type="button" class="btn" id="save-parking-btn" onclick="saveParkingDetails()">Save Changes</button>
+        </div>
+    </div>
+
+    <!-- Notification for successful action -->
+    <div id="notification" class="notification">Parking details updated successfully!</div>
+
+    <script>
+        // Enable Save Changes button only when all fields are filled
+        document.querySelectorAll('#parking-form input, #parking-form textarea').forEach(input => {
+            input.addEventListener('input', checkForm);
+        });
+
+        function checkForm() {
+            const parkingLotName = document.getElementById('parking-lot-name').value;
+            const capacity = document.getElementById('capacity').value;
+            const location = document.getElementById('location').value;
+            const twoWheelPricing = document.getElementById('two-wheel-pricing').value;
+            const threeWheelPricing = document.getElementById('three-wheel-pricing').value;
+            const fourWheelPricing = document.getElementById('four-wheel-pricing').value;
+
+            // Enable Save Changes button only if all fields are filled
+            const saveBtn = document.getElementById('save-parking-btn');
+            if (parkingLotName && capacity && location && twoWheelPricing && threeWheelPricing && fourWheelPricing) {
+                saveBtn.disabled = false;
+            } else {
+                saveBtn.disabled = true;
+            }
+        }
+
+        function saveParkingDetails() {
+            // Simulate saving the parking lot details
+            setTimeout(() => {
+                // Show notification
+                document.getElementById('notification').style.display = 'block';
+
+                // Hide notification after 2 seconds and reset the form
+                setTimeout(() => {
+                    document.getElementById('notification').style.display = 'none';
+                    document.getElementById('parking-form').reset();
+                    document.getElementById('save-parking-btn').disabled = true;
+                }, 2000);
+            }, 500);
+        }
+
+        function checkForm() {
+    const parkingLotName = document.getElementById('parking-lot-name').value;
+    const capacity = document.getElementById('capacity').value;
+    const location = document.getElementById('location').value;
+    const twoWheelPricing = document.getElementById('two-wheel-pricing').value;
+    const threeWheelPricing = document.getElementById('three-wheel-pricing').value;
+    const fourWheelPricing = document.getElementById('four-wheel-pricing').value;
+
+    // Enable Save Changes button only if all fields are filled
+    const saveBtn = document.getElementById('save-parking-btn');
+    
+    if (parkingLotName && capacity && location && twoWheelPricing && threeWheelPricing && fourWheelPricing) {
+        saveBtn.disabled = false;  // Enable the button
+    } else {
+        saveBtn.disabled = true;   // Disable the button if any field is empty
+    }
+}
+
+document.querySelectorAll('#parking-form input, #parking-form textarea').forEach(input => {
+    input.addEventListener('input', checkForm);
+});
+
+function saveParkingDetails() {
+    const parkingLotName = document.getElementById('parking-lot-name').value;
+    const capacity = document.getElementById('capacity').value;
+    const location = document.getElementById('location').value;
+    const twoWheelPricing = document.getElementById('two-wheel-pricing').value;
+    const threeWheelPricing = document.getElementById('three-wheel-pricing').value;
+    const fourWheelPricing = document.getElementById('four-wheel-pricing').value;
+
+    // Check if all fields are filled before saving
+    if (parkingLotName && capacity && location && twoWheelPricing && threeWheelPricing && fourWheelPricing) {
+        // Simulate saving the parking lot details
+        setTimeout(() => {
+            // Show notification
+            document.getElementById('notification').style.display = 'block';
+
+            // Hide notification after 2 seconds and reset the form
+            setTimeout(() => {
+                document.getElementById('notification').style.display = 'none';
+                document.getElementById('parking-form').reset();
+                document.getElementById('save-parking-btn').disabled = true;
+            }, 2000);
+        }, 500);
+    } else {
+        // Optional: Alert the user if fields are missing
+        alert("Please fill in all required fields.");
+    }
+}
+
+    </script>
+
+</body>
+</html>

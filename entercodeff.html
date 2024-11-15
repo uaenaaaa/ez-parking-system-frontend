@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enter Verification Code</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 400px;
+        }
+        h2 {
+            color: #3c3b54;
+            margin-bottom: 10px;
+        }
+        .email-info {
+            font-size: 14px;
+            color: #767184;
+            margin-bottom: 20px;
+        }
+        .code-inputs {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin: 20px 0;
+        }
+        .code-inputs input {
+            width: 50px;
+            height: 50px;
+            font-size: 24px;
+            text-align: center;
+            border: 1px solid #767184;
+            border-radius: 8px;
+            outline: none;
+            transition: border-color 0.3s ease;
+            color: #3c3b54;
+        }
+        .code-inputs input:focus {
+            border-color: #767184;
+        }
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: #767184;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+            margin-top: 20px;
+        }
+        button:hover {
+            background-color: #9d9d9d;
+        }
+        .error-message {
+            color: #ff4d4f;
+            margin-top: 20px;
+            display: none;
+        }
+        .resend-info {
+            font-size: 14px;
+            color: #767184;
+            margin-top: 10px;
+        }
+        .resend-text {
+            color: #767184;
+            cursor: pointer;
+            display: inline-block;
+            pointer-events: none;
+        }
+        .resend-text.active {
+            pointer-events: auto;
+            color: #767190;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Enter Verification Code</h2>
+    <p class="email-info">A code has been sent to <span id="user-email"></span></p>
+    <form id="code-form">
+        <div class="code-inputs">
+            <input type="text" maxlength="1" class="code" required>
+            <input type="text" maxlength="1" class="code" required>
+            <input type="text" maxlength="1" class="code" required>
+            <input type="text" maxlength="1" class="code" required>
+            <input type="text" maxlength="1" class="code" required>
+            <input type="text" maxlength="1" class="code" required>
+        </div>
+        <button type="submit">Verify Code</button>
+    </form>
+    <p class="error-message" id="error-message">Invalid code. Please try again.</p>
+    <div class="resend-info">
+        <span id="timer">30</span> seconds remaining to resend code
+        <br>
+        <span id="resend-link" class="resend-text">Resend Code</span>
+    </div>
+</div>
+
+<script>
+    // Retrieve and display the user's email
+    const emailFromLocalStorage = localStorage.getItem('userEmail');
+    const emailFromURL = new URLSearchParams(window.location.search).get('email');
+    const email = emailFromURL || emailFromLocalStorage;
+    document.getElementById('user-email').textContent = email;
+
+    // Auto-focus logic for the code inputs
+    const codeInputs = document.querySelectorAll('.code');
+    codeInputs.forEach((input, index) => {
+        input.addEventListener('input', (e) => {
+            // Move to the next input box if a digit is entered
+            if (e.target.value.length === 1 && index < codeInputs.length - 1) {
+                codeInputs[index + 1].focus();
+            }
+        });
+
+        input.addEventListener('keydown', (e) => {
+            // Allow backspace to move focus to the previous box
+            if (e.key === 'Backspace' && input.value === '' && index > 0) {
+                codeInputs[index - 1].focus();
+            }
+        });
+    });
+
+    // Handle the form submission
+    document.getElementById('code-form').addEventListener('submit', function(event) {
+        event.preventDefault();
+        
+        const enteredCode = Array.from(codeInputs).map(input => input.value).join('');
+        const correctCode = '123456';
+        const errorMessage = document.getElementById('error-message');
+        
+        if (enteredCode === correctCode) {
+            alert('Verification successful!');
+            window.location.href = 'ownerlp2.html';
+        } else {
+            errorMessage.style.display = 'block';
+            codeInputs.forEach(input => input.value = '');  // Clear input fields
+            codeInputs[0].focus();  // Focus on the first input box
+        }
+    });
+
+    // Countdown timer for resend button
+    let countdown = 30;
+    let timerInterval;
+
+    function startCountdown() {
+        const timerElement = document.getElementById('timer');
+        const resendLink = document.getElementById('resend-link');
+        resendLink.classList.remove('active');
+        resendLink.style.pointerEvents = 'none';
+        resendLink.style.color = '#767184';
+
+        countdown = 30;
+        timerElement.textContent = countdown;
+
+        timerInterval = setInterval(() => {
+            countdown--;
+            timerElement.textContent = countdown;
+            if (countdown <= 0) {
+                clearInterval(timerInterval);
+                resendLink.classList.add('active');
+                resendLink.style.pointerEvents = 'auto';
+                resendLink.style.color = '#4ecca3';
+            }
+        }, 1000);
+    }
+
+    // Resend code functionality
+    const resendLink = document.getElementById('resend-link');
+    resendLink.addEventListener('click', function () {
+        alert('A new verification code has been sent to your email.');
+        startCountdown();
+    });
+
+    // Start the countdown when the page loads
+    startCountdown();
+</script>
+
+</body>
+</html>

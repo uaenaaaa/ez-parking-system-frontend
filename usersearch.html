@@ -3,34 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>User Search</title>
+    <title>Visitor Search</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
+        /* General page styling */
         body {
-            background-color: #ffffff;
-            font-family: Arial, sans-serif;
-            height: 100vh;
             margin: 0;
-            padding: 0;
+            font-family: Arial, sans-serif;
+            color: #000;
+            background-color: #767184;
         }
 
+        /* Navbar */
         .navbar {
             position: fixed;
-               top: 0;
-               width: 100%;
-               height: 80px;
-               background: #D9D9D9; 
-               display: flex;
-               justify-content: space-between;
-               align-items: center;
-               padding: 0 20px;
-               z-index: 100;
-               box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1)
+            top: 0;
+            width: 100%;
+            height: 80px;
+            background: rgba(217, 217, 217, 0.9);
+            display: flex;
+            align-items: center;
+            padding: 0 20px;
+            z-index: 100;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
 
         .navbar .logo {
@@ -40,278 +34,184 @@
         }
 
         .navbar .logo img {
-            max-height: 110px;
-            width: auto;
-            margin-right: 10px;
+            height: 110px;
         }
 
-        .navbar .search-bar1 {
-            flex-shrink: 0;
-            width: 300px;
-            margin-right: 20px;
-        }
-
-        .navbar .search-bar1 input {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            outline: none;
-        }
-
-        .navbar .profile-icon {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background-color: #ddd;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #000;
-            font-size: 20px;
-            cursor: pointer;
-            margin-left: auto;
-        }
-
-        .search-bar2 {
-            margin-top: 70px;
-            display: flex;
-            justify-content: center;
+        /* Search Bar */
+        .navbar .search-bar {
+            flex-grow: 1;
+            max-width: 700px;
             position: relative;
-            padding: 40px;
         }
 
-        .search-bar2 input {
+        .navbar .search-bar input[type="text"] {
             width: 100%;
-            max-width: 1000px;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 25px;
-            outline: none;
+            padding: 12px 18px;
             font-size: 16px;
-        }
-
-        .divider {
-            height: 2px;
-            background-color: #ccc;
-            margin: 30px auto;
-            max-width: 1000px;
-        }
-
-        .home-indicator {
-            margin: 20px;
-            margin-left: 190px;
-            font-size: 18px;
-            color: #767184;
-        }
-
-        .home-button {
-            color: #0d0d0d;
-            text-decoration: none;
-        }
-
-        .home-button:hover {
-            text-decoration: underline;
-        }
-
-        .parking-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            gap: 20px;
-            padding: 20px;
-            max-width: 1000px;
-            margin: 0 auto;
-            margin-top: 30px;
-        }
-
-        .parking-item {
-            background-color: #D9D9D9;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            text-align: center;
-            padding: 20px;
-            cursor: pointer;
-            transition: transform 0.3s ease;
-        }
-
-        .parking-item img {
-            width: 100px;
-            height: 100px;
-            object-fit: cover;
+            border: 1px solid #ccc;
             border-radius: 5px;
+            box-sizing: border-box;
         }
 
-        .parking-item:hover {
-            transform: scale(1.05);
+        /* Main container */
+        .container {
+            display: flex;
+            height: calc(100vh - 100px);
+            margin-top: 80px;
         }
 
-        .parking-item h3 {
-            margin-top: 15px;
+        /* Search Results Section */
+        .search-results {
+            width: 35%;
+            background-color: #D9D9D9;
+            overflow-y: auto;
+            padding: 15px;
+            box-shadow: 2px 0 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .search-results h2 {
+            font-size: 22px;
+            margin-bottom: 15px;
+            color: #333;
+        }
+
+        .result-item {
+            background-color: white;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .result-item .info h3 {
             font-size: 18px;
+            margin: 0;
+            color: #333;
         }
 
-        .side-menu {
-            position: fixed;
-            top: 0;
-            right: -250px; 
-            width: 250px;
-            height: 100%;
-            background-color: #fff;
-            box-shadow: -2px 0 5px rgba(0, 0, 0, 0.3);
-            transition: right 0.3s ease;
-            z-index: 1001;
-            padding: 20px;
+        .result-item .info p {
+            margin: 5px 0;
+            font-size: 14px;
+            color: #666;
         }
 
-        .side-menu.open {
-            right: 0; 
+        .result-item .distance {
+            font-size: 12px;
+            color: #444;
         }
 
-        .side-menu h2 {
-            margin-bottom: 20px;
+        .result-item .status {
+            color: green;
+            font-weight: bold;
+            font-size: 12px;
         }
 
-        .side-menu .logout-button {
-            display: block;
-            margin-top: 20px;
-            padding: 10px;
-            background-color: #767184;
+        .directions-button {
+            background-color: #8f86a8;
             color: white;
-            text-align: center;
+            border: none;
+            padding: 8px 12px;
             border-radius: 5px;
-            text-decoration: none;
+            cursor: pointer;
+            font-size: 14px;
         }
 
-        .side-menu .logout-button:hover {
-            background-color: #D9D9D9;
+        /* Map Section */
+        .map-container {
+            flex-grow: 1;
+            position: relative;
+        }
+
+        .map {
+            width: 100%;
+            height: 100%;
+            border: none;
         }
     </style>
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const establishments = [
-                { name: 'SM Fairview', img: 'sm.png', link: 'smfairview.html?establishment=SM%20Fairview', location: '2 Quirino Hwy, Novaliches, Quezon City, Metro Manila', hours: '10 AM–10 PM' },
-                { name: 'Robinsons Fairview', img: 'robinsons.png', link: 'parking-page-robinsons-fairview.html', location: 'Quirino Hwy, Novaliches, Quezon City, 63011 Metro Manila', hours: '9 AM–10 PM' },
-                { name: 'Ayala Malls Fairview Terraces', img: 'ayala.png', link: 'parking-page-ayala-fairview.html', location: 'Barangay corner, Quirino Highway, Maligaya St, Novaliches, Quezon City, 1118 Metro Manila', hours: '10 AM–9 PM' },
-                { name: 'Robinsons Galleria Ortigas', img: 'robinsons.png', link: 'parking-page-robinsons-galleria.html', location: 'Ortigas Ave, Ortigas Center, Quezon City, Metro Manila', hours: '10 AM–10 PM' },
-                { name: 'TriNoma', img: 'trinoma.png', link: 'parking-page-trinoma.html', location: '2/F Trinoma Mall 173, Quezon City, 1105 Metro Manila', hours: '10 AM–10 PM' },
-                { name: 'SM City North EDSA', img: 'sm.png', link: 'parking-page-sm-north-edsa.html', location: 'North Avenue, corner Epifanio de los Santos Ave, Quezon City, 1100 Metro Manila', hours: '10 AM–10 PM' }
-            ];
-
-            const locationSearchInput = document.querySelector('.search-bar1 input');
-            const nameSearchInput = document.querySelector('.search-bar2 input');
-            const parkingGrid = document.querySelector('.parking-grid');
-            const profileIcon = document.querySelector('.profile-icon');
-            const sideMenu = document.querySelector('.side-menu');
-
-            const storedLocation = localStorage.getItem('locationInput');
-            if (storedLocation) {
-                locationSearchInput.value = storedLocation;
-            }
-
-            function displayAllResults() {
-                parkingGrid.innerHTML = '';
-                establishments.forEach(est => {
-                    const div = document.createElement('div');
-                    div.className = 'parking-item';
-                    div.innerHTML = `<img src="${est.img}" alt="${est.name} logo" onerror="this.onerror=null; this.src='fallback-image.png';">
-                                     <h3>${est.name}</h3>
-                                     <p>Hours: ${est.hours}</p>`;
-                    div.addEventListener('click', () => {
-                        window.location.href = est.link;
-                    });
-                    parkingGrid.appendChild(div);
-                });
-            }
-
-            function filterResults() {
-                const locationQuery = locationSearchInput.value.toLowerCase();
-                const nameQuery = nameSearchInput.value.toLowerCase();
-                parkingGrid.innerHTML = '';
-
-                const filtered = establishments.filter(est =>
-                    (locationQuery && est.location.toLowerCase().includes(locationQuery)) || 
-                    (nameQuery && est.name.toLowerCase().includes(nameQuery))
-                );
-
-                if (filtered.length === 0) {
-                    parkingGrid.innerHTML = '<p>No parking establishments found.</p>';
-                } else {
-                    filtered.forEach(est => {
-                        const div = document.createElement('div');
-                        div.className = 'parking-item';
-                        div.innerHTML = `<img src="${est.img}" alt="${est.name} logo" onerror="this.onerror=null; this.src='fallback-image.png';">
-                                         <h3>${est.name}</h3>
-                                         <p>Hours: ${est.hours}</p>`;
-                        div.addEventListener('click', () => {
-                            window.location.href = est.link;
-                        });
-                        parkingGrid.appendChild(div);
-                    });
-                }
-            }
-
-            locationSearchInput.addEventListener('input', () => {
-                if (!locationSearchInput.value && !nameSearchInput.value) {
-                    displayAllResults();
-                } else {
-                    filterResults();
-                }
-            });
-
-            nameSearchInput.addEventListener('input', () => {
-                if (!locationSearchInput.value && !nameSearchInput.value) {
-                    displayAllResults();
-                } else {
-                    filterResults();
-                }
-            });
-
-            profileIcon.addEventListener('click', () => {
-                sideMenu.classList.toggle('open');
-            });
-
-            document.addEventListener('click', (event) => {
-                if (!profileIcon.contains(event.target) && !sideMenu.contains(event.target)) {
-                    sideMenu.classList.remove('open');
-                }
-            });
-
-            document.querySelector('.logout-button').addEventListener('click', () => {
-                alert('Logging out...');
-                window.location.href = 'nearby.html'; 
-            });
-
-            displayAllResults();
-        });
-    </script>
 </head>
 <body>
-    <nav class="navbar">
+
+    <!-- Navbar -->
+    <div class="navbar">
         <div class="logo">
             <img src="nearby_logo.png" alt="NearbySpot Logo">
         </div>
-        <div class="search-bar1">
-            <input type="text" placeholder="Search location">
+        <!-- Search Bar -->
+        <div class="search-bar">
+            <input type="text" placeholder="Search for parking...">
         </div>
-        <div class="profile-icon">
-            <span>👤</span>
+    </div>
+
+    <!-- Main Container -->
+    <div class="container">
+        <!-- Search Results Section -->
+        <div class="search-results">
+            <h2>Parking in BGC</h2>
+            
+            <!-- Result 1 -->
+            <div class="result-item">
+                <div class="result" onclick="navigateToResult('result1')">
+                    <h3>One Parkade</h3>
+                    <p>H22X+4WC, Parking Lot</p>
+                    <p class="status">Open 24 hours</p>
+                    <p class="distance">2.1 km away</p>
+                </div>
+                <button class="directions-button" onclick="window.location.href='mapex.html'">Directions</button>
+            </div>
+
+            <!-- Result 2 -->
+            <div class="result-item">
+                <div class="result" onclick="navigateToResult('result2')">
+                    <h3>Market Market Parking</h3>
+                    <p>G3X4+83, Parking Lot</p>
+                    <p class="status">Open - Closes 9 PM</p>
+                    <p class="distance">1.8 km away</p>
+                </div>
+                <button class="directions-button" onclick="window.location.href='mapex.html'">Directions</button>
+            </div>
+            <!-- Result 3 -->
+            <div class="result-item">
+                <div class="result" onclick="navigateToResult('result3')">
+                    <h3>7th Ave Parking</h3>
+                   <p>G2XW+MWX, 7th Ave</p>
+                   <p class="status">Open - Closes 12 AM</p>
+                   <p class="distance">1.5 km away</p>
+               </div>
+               <button class="directions-button" onclick="window.location.href='mapex.html'">Directions</button>
+            </div>
+
+           <!-- Result 4 -->
+           <div class="result-item">
+            <div class="result" onclick="navigateToResult('result4')">
+                <h3>Gallery Parkade</h3>
+                   <p>G3X2+98X, 7th Ave</p>
+                   <p class="status">Open - Closes 12 AM</p>
+                   <p class="distance">1.2 km away</p>
+               </div>
+               <button class="directions-button" onclick="window.location.href='mapex.html'">Directions</button>
+            </div>
         </div>
-    </nav>
 
-    <div class="search-bar2">
-        <input type="text" placeholder="Search parking">
+        <script>
+            function navigateToResult(resultId) {
+                // Redirect to the detailed page of the selected result
+                window.location.href = `resultwall.html?id=${resultId}`;
+            }
+        </script>
+        
+
+        <!-- Map Section -->
+        <div class="map-container">
+            <iframe class="map" 
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3859.407731415259!2d121.04902791517263!3d14.552600989827994!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3397c90e30d1c44f%3A0xa217dcff8561d073!2sOne%20Parkade!5e0!3m2!1sen!2sph!4v1614076328908!5m2!1sen!2sph" 
+                allowfullscreen="" loading="lazy"></iframe>
+        </div>
     </div>
 
-    <div class="divider"></div>
+    
 
-    <div class="home-indicator">
-        <a href="userlp.html" class="home-button">Home</a> &gt; Parking
-    </div>
-
-    <div class="parking-grid"></div>
-
-    <div class="side-menu">
-        <a href="javascript:void(0)" class="logout-button">Log Out</a>
-    </div>
 </body>
 </html>

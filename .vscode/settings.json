@@ -1,0 +1,7 @@
+{
+	"liveServer.settings.https": {
+		"enable": true,
+		"cert": "D:/Downloads/ez-parking-system-frontend/certificates/localhost+2.pem",
+		"key": "D:/Downloads/ez-parking-system-frontend/certificates/localhost+2-key.pem"
+	}
+}

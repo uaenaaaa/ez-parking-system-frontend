@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Owner Landing Page 2</title>
+    <title>Select Your Role</title>
     <style>
         * {
             margin: 0;
@@ -11,185 +11,91 @@
             box-sizing: border-box;
         }
 
-        body {
-            background-color: #ffffff;
-            font-family: Arial, sans-serif;
-            height: 100vh;
+        body, html {
+            height: 100%;
             display: flex;
             justify-content: center;
             align-items: center;
-            color: black;
-            flex-direction: column; /* Stack navbar and buttons vertically */
-        }
-
-        .navbar {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            height: 80px;
-            background: #D9D9D9; 
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0 20px;
-            z-index: 100;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
-
-        .navbar .logo img {
-            height: 110px; 
-            width: auto;
-        }
-
-        .navbar .profile-icon {
-            display: flex;
-            align-items: center;
-            position: relative; /* For positioning the dropdown */
-        }
-
-        .navbar .profile-icon img {
-            height: 50px;
-            width: 50px;
-            border-radius: 50%;  
-            object-fit: cover;   
-            cursor: pointer;
-        }
-
-        /* Slide menu styles */
-        .slide-menu {
-            display: none; /* Hidden by default */
-            position: absolute;
-            right: 0;
-            top: 60px; /* Below the navbar */
-            background: #ffffff;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            z-index: 200;
-            padding: 10px;
-            width: 150px; /* Set a width for the slide menu */
-        }
-
-        .slide-menu a {
-            display: block;
-            padding: 10px;
-            text-decoration: none;
-            color: #333; /* Dark color for text */
-            border-radius: 3px; /* Rounded corners for links */
-            transition: background 0.3s; /* Smooth background transition */
-        }
-
-        .slide-menu a:hover {
-            background: #f0f0f0; /* Light gray background on hover */
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #f0f0f5, #7c748f);
         }
 
         .container {
-            display: flex;
-            justify-content: center;
-            gap: 20px;  
-            margin-top: 100px; 
-            flex-direction: row; 
+            text-align: center;
         }
 
-        .button {
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+
+        .role-boxes {
             display: flex;
             justify-content: center;
-            align-items: center;
-            flex-direction: column; 
+            gap: 20px;
+        }
+
+        .role-box {
             width: 150px;
             height: 150px;
-            background-color: #767184;
-            text-decoration: none;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background-color: #fff;
             border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             cursor: pointer;
+            transition: transform 0.3s ease;
         }
 
-        .button:hover {
-            background-color: #736f75;
+        .role-box img {
+            width: 50px;
+            height: 50px;
+            margin-bottom: 10px;
         }
 
-        .button img {
-            width: 60px; 
-            height: 60px;
+        .role-box span {
+            font-size: 1rem;
+            color: #333;
         }
 
-        .label {
-            text-align: center;
-            margin-top: 10px; 
-            font-size: 16px;
-            color: black;
-            margin-bottom: 20px; /* Add spacing below labels */
+        .role-box:hover {
+            transform: scale(1.1);
+        }
+
+        #cashier {
+            background-color: #cce7ff;
+        }
+
+        #supervisor {
+            background-color: #ffebcc;
+        }
+
+        #owner {
+            background-color: #d8ffcc;
         }
     </style>
 </head>
 <body>
-    <nav class="navbar">
-        <div class="logo">
-            <a href="index.html"><img src="nearby_logo.png" alt="NearbySpot Logo"></a>
-        </div>
-        <div class="profile-icon">
-            <a href="#" onclick="toggleMenu(event)"><img src="https://cdn-icons-png.flaticon.com/512/149/149071.png" alt="Profile Icon"></a>
-            <div class="slide-menu" id="slideMenu">
-                <a href="nearby.html" onclick="closeMenu()">Log Out</a>
-            </div>
-        </div>
-    </nav>
 
-    <div class="container">
-        <div>
-            <a href="entry.html" class="button">
-                <img src="https://img.icons8.com/ios-filled/60/ffffff/plus.png" alt="New Entry Icon">
-            </a>
-            <div class="label">New Entry</div>
+<div class="container">
+    <h1>Select Your Role</h1>
+    <div class="role-boxes">
+        <div class="role-box" id="cashier">
+            <img src="cashier-icon.png" alt="Cashier">
+            <span>Cashier</span>
         </div>
-
-        <div>
-            <a href="exit.html" class="button">
-                <img src="https://img.icons8.com/ios-filled/60/ffffff/exit.png" alt="Exit Vehicle Icon">
-            </a>
-            <div class="label">Exit Vehicle</div>
+        <div class="role-box" id="supervisor">
+            <img src="supervisor-icon.png" alt="Supervisor">
+            <span>Supervisor</span>
         </div>
-
-        <div>
-            <a href="monitor.html" class="button">
-                <img src="https://img.icons8.com/ios-filled/60/ffffff/monitor.png" alt="Monitor Slots Icon">
-            </a>
-            <div class="label">Monitor Slots</div>
-        </div>
-
-        <div>
-            <a href="settings.html" class="button">
-                <img src="https://img.icons8.com/ios-filled/60/ffffff/settings.png" alt="Settings Icon">
-            </a>
-            <div class="label">Settings</div>
-        </div>
-
-        <div>
-            <a href="reports.html" class="button">
-                <img src="report.png" alt="Reports Icon">
-            </a>
-            <div class="label">Reports</div>
+        <div class="role-box" id="owner">
+            <img src="owner-icon.png" alt="Owner">
+            <span>Owner</span>
         </div>
     </div>
+</div>
 
-    <script>
-        function toggleMenu(event) {
-            event.stopPropagation(); // Prevent click from closing menu
-            const menu = document.getElementById("slideMenu");
-            menu.style.display = menu.style.display === "block" ? "none" : "block";
-        }
-
-        function closeMenu() {
-            const menu = document.getElementById("slideMenu");
-            menu.style.display = "none"; // Hide the menu
-        }
-
-        window.onclick = function(event) {
-            const menu = document.getElementById("slideMenu");
-            if (event.target.closest('.profile-icon') === null) {
-                menu.style.display = "none"; // Hide the menu if clicking outside
-            }
-        }
-    </script>
 </body>
 </html>

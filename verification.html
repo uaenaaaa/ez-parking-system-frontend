@@ -106,7 +106,7 @@
 	<body>
 		<nav class="navbar">
 			<div class="logo">
-				<a href="index.html"
+				<a href="nearby.html"
 					><img
 						src="nearby_logo.png"
 						alt="NearbySpot Logo"
@@ -115,12 +115,13 @@
 		</nav>
 
 		<div class="container">
-			<div class="verification-text">
-				Enter the 6-digit code sent to your email address
+			<div
+				class="verification-text"
+				id="verificationText">
+				Enter the 6-digit code sent to
 				<span
-					id="phoneNumber"
+					id="contactInfo"
 					class="example-number"></span>
-				<!-- by SMS -->
 			</div>
 
 			<div class="input-container">
@@ -174,38 +175,40 @@
 				const urlParams = new URLSearchParams(queryString);
 				return {
 					phone: urlParams.get('phone'),
+					email: urlParams.get('email'),
 				};
 			}
 
 			const params = getQueryParams();
-			const phoneNumberElement = document.getElementById('phoneNumber');
+			const contactInfoElement = document.getElementById('contactInfo');
+			const verificationTextElement =
+				document.getElementById('verificationText');
+			const resendButton = document.getElementById('resendButton');
+			const timerText = document.getElementById('timerText');
 
 			if (params.phone) {
-				phoneNumberElement.textContent = params.phone;
+				contactInfoElement.textContent = params.phone;
+				verificationTextElement.textContent = `Enter the 6-digit code sent to ${params.phone} by SMS`;
+			} else if (params.email) {
+				contactInfoElement.textContent = params.email;
+				verificationTextElement.textContent = `Enter the 6-digit code sent to ${params.email} by email`;
 			} else {
-				phoneNumberElement.textContent = '';
+				contactInfoElement.textContent =
+					'No contact information provided';
 			}
 
-			const inputs = Array.from(
-				document.getElementsByClassName('code-input'),
-			);
+			const inputs = document.querySelectorAll('.code-input');
 
 			inputs.forEach((input, index) => {
-				input.addEventListener('input', (e) => {
-					console.log(e.target.value);
+				input.addEventListener('input', () => {
 					input.value = input.value.replace(/\D/g, '');
 
 					if (input.value.length === 1 && index < inputs.length - 1) {
 						inputs[index + 1].focus();
 					}
-
-					if (getCodeFromInputs().length === inputs.length) {
-						validateCode();
-					}
 				});
 
 				input.addEventListener('keydown', (e) => {
-					console.log(e.key);
 					if (
 						![
 							'Backspace',
@@ -238,9 +241,10 @@
 			}
 
 			function validateCode() {
-				const enteredCode = Number(getCodeFromInputs());
+				const enteredCode = getCodeFromInputs();
 				const email = localStorage.getItem('email');
-				fetch('http://127.0.0.1:5000/v1/auth/verify-otp', {
+				const remember = localStorage.getItem('remember');
+				fetch('https://127.0.0.1:5000/v1/auth/verify-otp', {
 					method: 'PATCH',
 					headers: {
 						'Content-Type': 'application/json',
@@ -248,6 +252,7 @@
 					body: JSON.stringify({
 						email: email,
 						otp: enteredCode,
+						remember_me: remember,
 					}),
 				})
 					.then((response) => response.json())
@@ -259,6 +264,7 @@
 							document.getElementById(
 								'errorMessage',
 							).textContent = data.message;
+							console.error('Error:', data);
 						}
 					})
 					.catch((error) => {
@@ -267,9 +273,6 @@
 			}
 
 			let timer = 30;
-			const timerText = document.getElementById('timerText');
-			const resendButton = document.getElementById('resendButton');
-
 			const countdown = setInterval(() => {
 				if (timer > 0) {
 					timer--;

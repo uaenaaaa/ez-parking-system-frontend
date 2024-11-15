@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GCash Payment Verification</title>
+    <style>
+        /* Reset */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        /* Body */
+        body { 
+            font-family: Arial, sans-serif; 
+            background-color: #f0f2f5; 
+            color: #333; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            min-height: 100vh; 
+            padding: 20px;
+        }
+        
+        /* Container */
+        .container { 
+            background: #fff; 
+            padding: 30px 25px; 
+            border-radius: 12px; 
+            max-width: 400px; 
+            width: 100%; 
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); 
+            text-align: center; 
+        }
+        
+        /* Headings */
+        .container h2 { 
+            margin-bottom: 20px; 
+            font-size: 24px; 
+            color: #0084ff; 
+        }
+        
+        /* Amount */
+        .amount { 
+            font-size: 18px; 
+            font-weight: bold; 
+            color: #000; 
+            margin-bottom: 20px; 
+        }
+        
+        /* Input Field */
+        .input-field { 
+            width: 100%; 
+            padding: 12px 15px; 
+            margin: 10px 0; 
+            border-radius: 8px; 
+            border: 1px solid #ddd; 
+            font-size: 16px;
+        }
+        
+        /* Button */
+        .button { 
+            background-color: #7c748f; 
+            color: white; 
+            border: none; 
+            padding: 12px 0; 
+            border-radius: 8px; 
+            font-size: 18px; 
+            cursor: pointer; 
+            width: 100%; 
+            margin-top: 10px;
+            transition: background-color 0.3s ease; 
+        }
+        
+        .button:hover { 
+            background-color: #7c748f; 
+        }
+        
+        /* Verification Section */
+        #verification-section {
+            display: none; 
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>GCash Payment Verification</h2>
+        <p class="amount">Amount: ₱<span id="amount"></span></p>
+
+        <!-- GCash Number Input -->
+        <input type="text" class="input-field" id="gcash-number" placeholder="Enter GCash number">
+
+        <!-- Send Code Button -->
+        <button class="button" onclick="sendCode()">Send Code</button>
+
+        <!-- Verification Code Input (initially hidden) -->
+        <div id="verification-section">
+            <input type="text" class="input-field" id="verification-code" placeholder="Enter verification code">
+            <button class="button" onclick="confirmPayment()">Confirm Payment</button>
+        </div>
+    </div>
+
+    <script>
+        // Get amount from query parameters
+        const urlParams = new URLSearchParams(window.location.search);
+        const amount = urlParams.get('amount');
+        document.getElementById('amount').innerText = amount;
+
+        // Simulate sending code
+        function sendCode() {
+            const gcashNumber = document.getElementById('gcash-number').value;
+            if (gcashNumber === '') {
+                alert('Please enter your GCash number.');
+            } else {
+                alert('Verification code sent: 123456'); // Artificial code for demo
+                document.getElementById('verification-section').style.display = 'block'; // Show verification input
+            }
+        }
+
+        // Simulate payment confirmation
+        function confirmPayment() {
+            const verificationCode = document.getElementById('verification-code').value;
+            const gcashNumber = document.getElementById('gcash-number').value; // Get GCash number again here
+            if (verificationCode === '123456') {  // Check if code matches the artificial code
+                alert('Payment successful!');
+                window.location.href = `confirmation.html?amount=${amount}&gcashNumber=${gcashNumber}`;
+            } else {
+                alert('Invalid verification code. Please try again.');
+            }
+        }
+    </script>
+</body>
+</html>

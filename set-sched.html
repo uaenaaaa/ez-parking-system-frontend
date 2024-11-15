@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Set Schedule</title>
+    <style>
+        /* General styling */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
+            color: #333;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        h1 {
+            text-align: center;
+            color: #6d5f90;
+        }
+
+        .schedule-container {
+            max-width: 500px;
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            animation: fadeIn 0.6s ease-in-out;
+        }
+
+        .schedule-container h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: bold;
+            color: #6d5f90;
+            margin-bottom: 8px;
+        }
+
+        .form-group select,
+        .form-group input[type="time"] {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            border-radius: 6px;
+            border: 1px solid #ddd;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group select:focus,
+        .form-group input[type="time"]:focus {
+            border-color: #8f86a8;
+            outline: none;
+            box-shadow: 0 0 8px rgba(111, 88, 176, 0.2);
+        }
+
+        .btn {
+            width: 100%;
+            background-color: #6d5f90;
+            color: #ffffff;
+            border: none;
+            padding: 12px;
+            font-size: 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        .btn:hover {
+            background-color: #8f86a8;
+            transform: translateY(-2px);
+        }
+
+        .btn:active {
+            transform: translateY(1px);
+        }
+
+        /* Notification styling */
+        .notification {
+            display: none;
+            background-color: #4CAF50;
+            color: white;
+            padding: 12px;
+            border-radius: 5px;
+            text-align: center;
+            margin-top: 20px;
+            font-size: 16px;
+            animation: fadeIn 0.6s ease;
+        }
+
+        /* Keyframes for fade-in animation */
+        @keyframes fadeIn {
+            0% { opacity: 0; transform: scale(0.9); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="schedule-container">
+        <h1>Set Schedule</h1>
+        <p style="text-align: center; color: #666; margin-bottom: 30px;">
+            Adjust open/close hours and update availability for your parking lot.
+        </p>
+
+        <form id="scheduleForm">
+            <div class="form-group">
+                <label for="day-select">Select Day</label>
+                <select id="day-select" name="day-select">
+                    <option value="monday">Monday</option>
+                    <option value="tuesday">Tuesday</option>
+                    <option value="wednesday">Wednesday</option>
+                    <option value="thursday">Thursday</option>
+                    <option value="friday">Friday</option>
+                    <option value="saturday">Saturday</option>
+                    <option value="sunday">Sunday</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="open-time">Opening Time</label>
+                <input type="time" id="open-time" name="open-time">
+            </div>
+
+            <div class="form-group">
+                <label for="close-time">Closing Time</label>
+                <input type="time" id="close-time" name="close-time">
+            </div>
+
+            <button type="button" class="btn" onclick="saveSchedule()">Save Schedule</button>
+        </form>
+
+        <div id="notification" class="notification">
+            Schedule successfully saved!
+        </div>
+    </div>
+
+    <script>
+        function saveSchedule() {
+            // Show notification
+            const notification = document.getElementById('notification');
+            notification.style.display = 'block';
+
+            // Simulate saving and redirect after a delay
+            setTimeout(() => {
+                // Hide notification and redirect to dashboard
+                notification.style.display = 'none';
+                window.location.href = 'ownerdashboard.html';
+            }, 2000); // 2-second delay before redirecting
+        }
+    </script>
+
+</body>
+</html>
