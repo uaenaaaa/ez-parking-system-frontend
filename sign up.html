@@ -1,109 +1,186 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sign Up</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-        }
+	<head>
+		<meta charset="UTF-8" />
+		<meta
+			name="viewport"
+			content="width=device-width, initial-scale=1.0" />
+		<title>Sign Up</title>
+		<script
+			src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
+			integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
+			crossorigin="anonymous"
+			referrerpolicy="no-referrer"></script>
+		<style>
+			body {
+				font-family: Arial, sans-serif;
+				background-color: #f4f4f4;
+				margin: 0;
+				padding: 0;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				height: 100vh;
+			}
 
-        .registration-form {
-            background-color: white;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            max-width: 400px;
-            width: 100%;
-        }
+			.registration-form {
+				background-color: white;
+				padding: 30px;
+				border-radius: 10px;
+				box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+				max-width: 400px;
+				width: 100%;
+			}
 
-        .registration-form h2 {
-            text-align: center;
-            margin-bottom: 20px;
-            font-size: 24px;
-            color: #333;
-        }
+			.registration-form h2 {
+				text-align: center;
+				margin-bottom: 20px;
+				font-size: 24px;
+				color: #333;
+			}
 
-        .registration-form input {
-            width: 100%;
-            padding: 10px;
-            margin: 10px 0;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-        }
+			.registration-form input,
+			.registration-form select {
+				width: 100%;
+				padding: 10px;
+				margin: 10px 0;
+				border: 1px solid #ccc;
+				border-radius: 5px;
+			}
 
-        .registration-form button {
-            width: 100%;
-            padding: 10px;
-            border: none;
-            background-color: #1A4862;
-            color: white;
-            font-size: 16px;
-            border-radius: 5px;
-            cursor: pointer;
-        }
+			.registration-form button {
+				width: 100%;
+				padding: 10px;
+				border: none;
+				background-color: #1a4862;
+				color: white;
+				font-size: 16px;
+				border-radius: 5px;
+				cursor: pointer;
+			}
 
-        .registration-form button:hover {
-            background-color: #14576c;
-        }
+			.registration-form button:hover {
+				background-color: #14576c;
+			}
 
-        .registration-form .checkbox-container {
-            display: flex;
-            align-items: center;
-            margin-bottom: 20px;
-        }
+			.registration-form .checkbox-container {
+				display: flex;
+				align-items: center;
+				margin-bottom: 20px;
+			}
 
-        .registration-form input[type="checkbox"] {
-            margin-right: 10px;
-        }
+			.registration-form input[type='checkbox'] {
+				margin-right: 10px;
+			}
 
-        .error-message {
-            color: red;
-            font-size: 14px;
-            text-align: center;
-            margin-bottom: 10px;
-        }
-    </style>
-</head>
-<body>
+			.error-message {
+				color: red;
+				font-size: 14px;
+				text-align: center;
+				margin-bottom: 10px;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="registration-form">
+			<h2>Sign Up</h2>
+			<form id="signupForm">
+				<input
+					type="text"
+					id="first-name"
+					name="first-name"
+					placeholder="First Name"
+					required />
 
-    <div class="registration-form">
-        <h2>Sign Up</h2>
-        <form id="signupForm">
-            <!-- Name -->
-            <input type="text" id="name" name="name" placeholder="Full Name" required>
+				<input
+					type="text"
+					id="last-name"
+					name="last-name"
+					placeholder="Last Name"
+					required />
 
-            <!-- Email -->
-            <input type="email" id="email" name="email" placeholder="Email Address" required>
+				<input
+					type="email"
+					id="email"
+					name="email"
+					placeholder="Email Address"
+					required />
 
-            <!-- Phone Number -->
-            <input type="tel" id="phoneNumber" name="phone" placeholder="Phone Number (11 digits)" required minlength="11">
+				<input
+					type="tel"
+					id="phoneNumber"
+					name="phone"
+					placeholder="Phone Number (11 digits)"
+					required
+					minlength="11" />
 
-            <!-- Password -->
-            <input type="password" id="password" name="password" placeholder="Password (min 8 characters)" required minlength="11">
-            
-            <!-- Confirm Password -->
-            <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirm Password" required>
-            
-            <!-- Remember Me Checkbox -->
-            <div class="checkbox-container">
-                <input type="checkbox" id="rememberMe" name="remember">
-                <label for="rememberMe">Remember Me on this device</label>
-            </div>
-            
-            <!-- Error Message Display -->
-            <div id="error-message" class="error-message"></div>
-            
-            <!-- Continue Button -->
-            <button type="submit">Sign Up</button>
-            
-        </form>
-    </div>
+				<select
+					id="role"
+					name="role"
+					required>
+					<option value="user">User</option>
+					<option value="parking_manager">Parking Manager</option>
+				</select>
+
+				<div class="checkbox-container">
+					<input
+						type="checkbox"
+						id="rememberMe"
+						name="remember" />
+					<label for="rememberMe">Remember Me on this device</label>
+				</div>
+
+				<div
+					id="error-message"
+					class="error-message"></div>
+
+				<button type="submit">Sign Up</button>
+			</form>
+		</div>
+		<script>
+			$(document).ready(function () {
+				$('#signupForm').submit(function (event) {
+					event.preventDefault();
+					$('#error-message').html('');
+					const firstName = $('#first-name').val();
+					const lastName = $('#last-name').val();
+					const email = $('#email').val();
+					const phoneNumber = $('#phoneNumber').val();
+					const rememberMe = $('#rememberMe').is(':checked');
+					const role = 'user';
+
+					console.log(
+						firstName,
+						lastName,
+						email,
+						phoneNumber,
+						rememberMe,
+						role,
+					);
+
+					fetch('https://localhost:5000/v1/auth/create-new-account', {
+						method: 'POST',
+						headers: {
+							'Content-Type': 'application/json',
+						},
+						body: JSON.stringify({
+							first_name: firstName,
+							last_name: lastName,
+							email: email,
+							phone_number: phoneNumber,
+							role: role,
+						}),
+					})
+						.then((response) => response.json())
+						.then((data) => {
+							alert(data.message);
+							window.location.href = 'reg.html';
+						})
+						.catch((error) => {
+							alert('Error:', error.message);
+						});
+				});
+			});
+		</script>
+	</body>
+</html>

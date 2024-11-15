@@ -170,6 +170,9 @@
 		</div>
 
 		<script>
+			// Remove the X-CSRF-Token in the cookie
+			document.cookie =
+				'X-CSRF-TOKEN=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
 			function getQueryParams() {
 				const queryString = window.location.search;
 				const urlParams = new URLSearchParams(queryString);
@@ -249,6 +252,7 @@
 					headers: {
 						'Content-Type': 'application/json',
 					},
+					credentials: 'include',
 					body: JSON.stringify({
 						email: email,
 						otp: enteredCode,
