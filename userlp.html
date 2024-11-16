@@ -688,11 +688,13 @@
 
 			console.log(jwt);
 
-			fetch('https://localhost:5000/v1/auth/verify-token', {
-				method: 'GET',
+			const csrf = getCookie('X-CSRF-TOKEN');
+
+			fetch('https://127.0.0.1:5000/v1/auth/verify-token', {
+				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',
-					Authorization: `Bearer ${jwt}`, // Include the JWT in the Authorization header
+					'X-CSRF-TOKEN': csrf,
 				},
 				credentials: 'include',
 			})
