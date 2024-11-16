@@ -118,8 +118,8 @@
 					id="role"
 					name="role"
 					required>
-					<option value="user">User</option>
-					<option value="parking_manager">Parking Manager</option>
+					<option value="User">User</option>
+					<option value="Parking Manager">Parking Manager</option>
 				</select>
 
 				<div class="checkbox-container">
@@ -147,7 +147,7 @@
 					const email = $('#email').val();
 					const phoneNumber = $('#phoneNumber').val();
 					const rememberMe = $('#rememberMe').is(':checked');
-					const role = 'user';
+					const role = $('#role').val();
 
 					console.log(
 						firstName,
